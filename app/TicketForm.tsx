@@ -55,9 +55,24 @@ export function TicketForm() {
 
   if (result) {
     return (
-      <div role="status">
-        <p>Thanks! Your ticket reference is {result.ticketRef}.</p>
-        <button type="button" onClick={() => setResult(null)}>
+      <div className="success" role="status">
+        <div className="success-icon">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path
+              d="M20 6 9 17l-5-5"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <h2>Ticket submitted</h2>
+        <p>
+          Thanks — your ticket reference is <span className="ticket-ref">{result.ticketRef}</span>. We&apos;ll follow
+          up by email.
+        </p>
+        <button type="button" className="ghost-button" onClick={() => setResult(null)}>
           Submit another ticket
         </button>
       </div>
@@ -65,68 +80,79 @@ export function TicketForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Email
-        <input type="email" name="email" required />
-      </label>
-      <label>
-        Full name
-        <input type="text" name="fullName" required />
-      </label>
-      <label>
-        Company name
-        <input type="text" name="companyName" />
-      </label>
-      <label>
-        Title
-        <input type="text" name="title" required />
-      </label>
-      <label>
-        Description
-        <textarea name="description" required />
-      </label>
-      <label>
-        Product area
-        <select name="productArea" required defaultValue="">
-          <option value="" disabled>
-            Select an area
-          </option>
-          {PRODUCT_AREAS.map((area) => (
-            <option key={area} value={area}>
-              {area}
+    <form className="form" onSubmit={handleSubmit}>
+      <div className="field">
+        <label htmlFor="email">Email</label>
+        <input id="email" type="email" name="email" placeholder="you@company.com" required />
+      </div>
+      <div className="field">
+        <label htmlFor="fullName">Full name</label>
+        <input id="fullName" type="text" name="fullName" placeholder="Jane Doe" required />
+      </div>
+      <div className="field">
+        <label htmlFor="companyName">Company name</label>
+        <input id="companyName" type="text" name="companyName" placeholder="Optional" />
+      </div>
+      <div className="field">
+        <label htmlFor="title">Title</label>
+        <input id="title" type="text" name="title" placeholder="Short summary of the issue" required />
+      </div>
+      <div className="field">
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          placeholder="What happened? Steps to reproduce, what you expected, etc."
+          required
+        />
+      </div>
+      <div className="row">
+        <div className="field">
+          <label htmlFor="productArea">Product area</label>
+          <select id="productArea" name="productArea" required defaultValue="">
+            <option value="" disabled>
+              Select
             </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Severity
-        <select name="severity" required defaultValue="">
-          <option value="" disabled>
-            Select severity
-          </option>
-          {SEVERITIES.map((severity) => (
-            <option key={severity} value={severity}>
-              {severity}
+            {PRODUCT_AREAS.map((area) => (
+              <option key={area} value={area}>
+                {area}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="severity">Severity</label>
+          <select id="severity" name="severity" required defaultValue="">
+            <option value="" disabled>
+              Select
             </option>
-          ))}
-        </select>
-      </label>
-      <label>
-        Ticket type
-        <select name="ticketType" required defaultValue="">
-          <option value="" disabled>
-            Select a type
-          </option>
-          {TICKET_TYPES.map((type) => (
-            <option key={type} value={type}>
-              {type}
+            {SEVERITIES.map((severity) => (
+              <option key={severity} value={severity}>
+                {severity}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="ticketType">Type</label>
+          <select id="ticketType" name="ticketType" required defaultValue="">
+            <option value="" disabled>
+              Select
             </option>
-          ))}
-        </select>
-      </label>
-      {error && <p role="alert">{error}</p>}
-      <button type="submit" disabled={submitting}>
+            {TICKET_TYPES.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+      {error && (
+        <p className="alert" role="alert">
+          {error}
+        </p>
+      )}
+      <button type="submit" className="submit" disabled={submitting}>
         {submitting ? "Submitting..." : "Submit ticket"}
       </button>
     </form>
