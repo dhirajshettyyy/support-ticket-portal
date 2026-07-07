@@ -123,4 +123,30 @@ describe("POST /api/tickets", () => {
       expect.objectContaining({ threadId: "th_1", key: "needs_github_issue", booleanValue: true })
     );
   });
+
+  it("still returns 200 with the ticket ref when the post-creation link write-back fails", async () => {
+    vi.mocked(upsertCustomer).mockResolvedValue({ customerId: "cust_1" });
+    vi.mocked(createThread).mockResolvedValue({ threadId: "th_1", ref: "T-1" });
+    vi.mocked(createIssue).mockResolvedValue({ number: 42, htmlUrl: "https://github.com/acme/repo/issues/42" });
+    vi.mocked(upsertThreadField).mockRejectedValue(new Error("Plain API down"));
+
+    const response = await POST(makeRequest(VALID_BODY));
+    const json = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(json).toEqual({ ticketRef: "T-1", githubIssueUrl: "https://github.com/acme/repo/issues/42" });
+  });
+
+  it("still returns 200 when tagging needs_github_issue fails after GitHub creation fails twice", async () => {
+    vi.mocked(upsertCustomer).mockResolvedValue({ customerId: "cust_1" });
+    vi.mocked(createThread).mockResolvedValue({ threadId: "th_1", ref: "T-1" });
+    vi.mocked(createIssue).mockRejectedValue(new Error("GitHub API down"));
+    vi.mocked(upsertThreadField).mockRejectedValue(new Error("Plain API down"));
+
+    const response = await POST(makeRequest(VALID_BODY));
+    const json = await response.json();
+
+    expect(response.status).toBe(200);
+    expect(json.githubIssueUrl).toBeNull();
+  });
 });

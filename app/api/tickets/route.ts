@@ -110,14 +110,22 @@ export async function POST(request: NextRequest) {
     } catch (error) {
       console.error(`GitHub issue creation attempt ${attempt} failed`, error);
       if (attempt === maxAttempts) {
-        await upsertThreadField({ threadId, key: "needs_github_issue", type: "BOOL", booleanValue: true });
+        try {
+          await upsertThreadField({ threadId, key: "needs_github_issue", type: "BOOL", booleanValue: true });
+        } catch (tagError) {
+          console.error("Failed to tag thread needs_github_issue", tagError);
+        }
       }
     }
   }
 
   if (issueNumber !== undefined && issueUrl !== undefined) {
-    await upsertThreadField({ threadId, key: "github_issue_number", type: "NUMBER", numberValue: issueNumber });
-    await upsertThreadField({ threadId, key: "github_issue_url", type: "STRING", stringValue: issueUrl });
+    try {
+      await upsertThreadField({ threadId, key: "github_issue_number", type: "NUMBER", numberValue: issueNumber });
+      await upsertThreadField({ threadId, key: "github_issue_url", type: "STRING", stringValue: issueUrl });
+    } catch (linkError) {
+      console.error("Failed to write back GitHub issue link to Plain thread", linkError);
+    }
   }
 
   return NextResponse.json({ ticketRef: threadRef, githubIssueUrl: issueUrl ?? null });
