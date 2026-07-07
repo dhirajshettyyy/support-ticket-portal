@@ -31,30 +31,50 @@ function slugify(value: string): string {
   return value.toLowerCase().trim().replace(/\s+/g, "-");
 }
 
-function isValidTicketRequestBody(body: unknown): body is TicketRequestBody {
-  if (typeof body !== "object" || body === null) return false;
+/**
+ * Returns a human-readable message per invalid field, empty if the body is
+ * valid. These messages describe the caller's own input, so they're safe to
+ * return directly in the API response (unlike Plain/GitHub error detail,
+ * which stays server-side only).
+ */
+function getValidationErrors(body: unknown): string[] {
+  if (typeof body !== "object" || body === null) {
+    return ["Request body must be a JSON object"];
+  }
   const b = body as Record<string, unknown>;
-  return (
-    typeof b.email === "string" &&
-    typeof b.fullName === "string" &&
-    typeof b.title === "string" &&
-    typeof b.description === "string" &&
-    b.description.length <= DESCRIPTION_MAX_LENGTH &&
-    typeof b.productArea === "string" &&
-    (PRODUCT_AREAS as string[]).includes(b.productArea) &&
-    typeof b.severity === "string" &&
-    (SEVERITIES as string[]).includes(b.severity) &&
-    typeof b.ticketType === "string" &&
-    (TICKET_TYPES as string[]).includes(b.ticketType)
-  );
+  const errors: string[] = [];
+
+  if (typeof b.email !== "string" || b.email.trim() === "") errors.push("email is required");
+  if (typeof b.fullName !== "string" || b.fullName.trim() === "") errors.push("fullName is required");
+  if (typeof b.title !== "string" || b.title.trim() === "") errors.push("title is required");
+
+  if (typeof b.description !== "string" || b.description.trim() === "") {
+    errors.push("description is required");
+  } else if (b.description.length > DESCRIPTION_MAX_LENGTH) {
+    errors.push(`description must be ${DESCRIPTION_MAX_LENGTH} characters or fewer`);
+  }
+
+  if (typeof b.productArea !== "string" || !(PRODUCT_AREAS as string[]).includes(b.productArea)) {
+    errors.push(`productArea must be one of: ${PRODUCT_AREAS.join(", ")}`);
+  }
+  if (typeof b.severity !== "string" || !(SEVERITIES as string[]).includes(b.severity)) {
+    errors.push(`severity must be one of: ${SEVERITIES.join(", ")}`);
+  }
+  if (typeof b.ticketType !== "string" || !(TICKET_TYPES as string[]).includes(b.ticketType)) {
+    errors.push(`ticketType must be one of: ${TICKET_TYPES.join(", ")}`);
+  }
+
+  return errors;
 }
 
 export async function POST(request: NextRequest) {
-  const body = await request.json();
+  const rawBody = await request.json();
 
-  if (!isValidTicketRequestBody(body)) {
-    return NextResponse.json({ error: "Invalid ticket payload" }, { status: 400 });
+  const validationErrors = getValidationErrors(rawBody);
+  if (validationErrors.length > 0) {
+    return NextResponse.json({ error: validationErrors.join("; ") }, { status: 400 });
   }
+  const body = rawBody as TicketRequestBody;
 
   let threadId: string;
   let threadRef: string;

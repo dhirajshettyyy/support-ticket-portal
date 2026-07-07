@@ -78,19 +78,27 @@ describe("POST /api/tickets", () => {
     );
   });
 
-  it("returns 400 for a payload missing required fields", async () => {
+  it("returns 400 with a message naming each missing required field", async () => {
     const response = await POST(makeRequest({ email: "jane@example.com" }));
+    const json = await response.json();
     expect(response.status).toBe(400);
+    expect(json.error).toContain("fullName is required");
+    expect(json.error).toContain("title is required");
+    expect(json.error).toContain("description is required");
   });
 
-  it("returns 400 for an invalid enum value", async () => {
+  it("returns 400 with a message naming the invalid enum value's field", async () => {
     const response = await POST(makeRequest({ ...VALID_BODY, severity: "banana" }));
+    const json = await response.json();
     expect(response.status).toBe(400);
+    expect(json.error).toContain("severity must be one of");
   });
 
-  it("returns 400 when the description exceeds Plain's length limit", async () => {
+  it("returns 400 with a message when the description exceeds Plain's length limit", async () => {
     const response = await POST(makeRequest({ ...VALID_BODY, description: "x".repeat(501) }));
+    const json = await response.json();
     expect(response.status).toBe(400);
+    expect(json.error).toBe("description must be 500 characters or fewer");
     expect(createThread).not.toHaveBeenCalled();
   });
 

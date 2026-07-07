@@ -44,16 +44,17 @@ export function TicketForm() {
         body: JSON.stringify(body),
       });
 
+      const json = await response.json();
+
       if (!response.ok) {
-        throw new Error("Failed to submit ticket");
+        throw new Error(typeof json?.error === "string" ? json.error : "Failed to submit ticket");
       }
 
-      const json = (await response.json()) as SubmitResult;
-      setResult(json);
+      setResult(json as SubmitResult);
       form.reset();
       setDescriptionLength(0);
-    } catch {
-      setError("Something went wrong submitting your ticket. Please try again.");
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong submitting your ticket. Please try again.");
     } finally {
       setSubmitting(false);
     }
