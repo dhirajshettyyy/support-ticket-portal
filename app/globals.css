@@ -1,35 +1,39 @@
 :root {
-  --bg: #f6f7f9;
+  --bg: #ffffff;
   --surface: #ffffff;
-  --border: #e2e4e9;
-  --text: #16181d;
-  --text-muted: #6b7078;
-  --accent: #4f46e5;
-  --accent-hover: #4338ca;
-  --accent-soft: #eef2ff;
-  --danger: #dc2626;
-  --danger-soft: #fef2f2;
-  --success: #16a34a;
-  --success-soft: #f0fdf4;
-  --radius: 10px;
-  --shadow: 0 1px 2px rgba(16, 24, 40, 0.04), 0 8px 24px rgba(16, 24, 40, 0.06);
+  --border: #e2e2e2;
+  --text: #1a1a1a;
+  --text-muted: #666666;
+  --accent: #111111;
+  --accent-hover: #333333;
+  --accent-soft: #f2f2f2;
+  --accent-contrast: #ffffff;
+  --danger: #c0392b;
+  --danger-soft: #fdf0ef;
+  --success: #111111;
+  --success-soft: #f2f2f2;
+  --radius: 6px;
+  --shadow: none;
+  --dot: #d9d9d9;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0b0c0f;
-    --surface: #16181d;
-    --border: #2a2d34;
-    --text: #f2f3f5;
-    --text-muted: #9a9fa8;
-    --accent: #818cf8;
-    --accent-hover: #a5b4fc;
-    --accent-soft: #1e1f3d;
-    --danger: #f87171;
-    --danger-soft: #2a1616;
-    --success: #4ade80;
-    --success-soft: #12211a;
-    --shadow: 0 1px 2px rgba(0, 0, 0, 0.2), 0 8px 24px rgba(0, 0, 0, 0.35);
+    --bg: #0a0a0a;
+    --surface: #0a0a0a;
+    --border: #2a2a2a;
+    --text: #f5f5f5;
+    --text-muted: #999999;
+    --accent: #f5f5f5;
+    --accent-hover: #d4d4d4;
+    --accent-soft: #1a1a1a;
+    --accent-contrast: #0a0a0a;
+    --danger: #ff6b5e;
+    --danger-soft: #241111;
+    --success: #f5f5f5;
+    --success-soft: #1a1a1a;
+    --shadow: none;
+    --dot: #262626;
   }
 }
 
@@ -46,16 +50,38 @@ body {
 body {
   background: var(--bg);
   color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, Helvetica, Arial, sans-serif;
+  font-family: var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
   -webkit-font-smoothing: antialiased;
 }
 
-.page {
-  min-height: 100dvh;
+.site-nav {
   display: flex;
   align-items: center;
-  justify-content: center;
-  padding: 2.5rem 1.25rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--text);
+}
+
+.nav-logo-mark {
+  font-size: 1.375rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.nav-logo-sub {
+  font-size: 0.5625rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--text-muted);
 }
 
 .card {
@@ -74,7 +100,7 @@ body {
 
 .header h1 {
   font-size: 1.375rem;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 0.375rem;
   letter-spacing: -0.01em;
 }
@@ -136,7 +162,7 @@ textarea {
   color: var(--text);
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.625rem 0.75rem;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -163,12 +189,14 @@ textarea:focus {
   margin-top: 0.5rem;
   appearance: none;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   background: var(--accent);
-  color: #fff;
-  font-size: 0.9375rem;
+  color: var(--accent-contrast);
+  font-size: 0.8125rem;
   font-weight: 600;
-  padding: 0.75rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.8125rem 1rem;
   cursor: pointer;
   transition: background 0.15s ease;
 }
@@ -187,7 +215,7 @@ textarea:focus {
   font-size: 0.875rem;
   color: var(--danger);
   background: var(--danger-soft);
-  border-radius: 8px;
+  border-radius: 4px;
   padding: 0.625rem 0.75rem;
 }
 
@@ -210,7 +238,7 @@ textarea:focus {
 
 .success h2 {
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0 0 0.5rem;
 }
 
@@ -226,26 +254,27 @@ textarea:focus {
   font-weight: 600;
   color: var(--accent);
   background: var(--accent-soft);
-  border-radius: 6px;
+  border-radius: 4px;
   padding: 0.1rem 0.5rem;
 }
 
 .ghost-button {
   appearance: none;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 1px solid var(--text);
+  border-radius: 4px;
   background: transparent;
   color: var(--text);
   font: inherit;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  padding: 0.625rem 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.6875rem 1rem;
   cursor: pointer;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
 
 .ghost-button:hover {
-  border-color: var(--accent);
   background: var(--accent-soft);
 }
 
@@ -253,6 +282,8 @@ textarea:focus {
   max-width: 720px;
   margin: 0 auto;
   padding: 4rem 1.25rem 3rem;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 18px 18px;
 }
 
 .hero {
@@ -260,11 +291,46 @@ textarea:focus {
   margin-bottom: 3rem;
 }
 
+.hero-frame {
+  position: relative;
+  border: 1.5px solid var(--text);
+  padding: 3rem 2rem;
+  background: var(--bg);
+}
+
+.corner {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: var(--text);
+}
+
+.corner-tl {
+  top: -4.5px;
+  left: -4.5px;
+}
+
+.corner-tr {
+  top: -4.5px;
+  right: -4.5px;
+}
+
+.corner-bl {
+  bottom: -4.5px;
+  left: -4.5px;
+}
+
+.corner-br {
+  bottom: -4.5px;
+  right: -4.5px;
+}
+
 .hero h1 {
-  font-size: 2rem;
+  font-size: 2.25rem;
   font-weight: 700;
   margin: 0 0 0.75rem;
   letter-spacing: -0.02em;
+  line-height: 1.15;
 }
 
 .hero p {
@@ -280,12 +346,12 @@ textarea:focus {
   box-shadow: var(--shadow);
   padding: 2.5rem 2rem;
   text-align: center;
-  margin-bottom: 3rem;
+  margin: 3rem 0;
 }
 
 .docs-card h2 {
-  font-size: 1.25rem;
-  font-weight: 600;
+  font-size: 1.375rem;
+  font-weight: 700;
   margin: 0 0 0.5rem;
 }
 
@@ -302,8 +368,8 @@ textarea:focus {
 }
 
 .help-section h2 {
-  font-size: 1.125rem;
-  font-weight: 600;
+  font-size: 1.25rem;
+  font-weight: 700;
   margin: 0 0 0.5rem;
 }
 
@@ -317,12 +383,14 @@ textarea:focus {
   display: inline-block;
   appearance: none;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   background: var(--accent);
-  color: #fff;
-  font-size: 0.9375rem;
+  color: var(--accent-contrast);
+  font-size: 0.8125rem;
   font-weight: 600;
-  padding: 0.75rem 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.8125rem 1.75rem;
   cursor: pointer;
   text-decoration: none;
   transition: background 0.15s ease;
@@ -350,7 +418,7 @@ textarea:focus {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(15, 17, 21, 0.5);
+  background: rgba(10, 10, 10, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -383,7 +451,7 @@ textarea:focus {
   line-height: 1;
   cursor: pointer;
   padding: 0.25rem 0.5rem;
-  border-radius: 6px;
+  border-radius: 4px;
 }
 
 .modal-close:hover {

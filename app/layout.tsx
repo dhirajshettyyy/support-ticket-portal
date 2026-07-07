@@ -1,6 +1,13 @@
 import type { ReactNode } from "react";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import { PlainChatWidget } from "./PlainChatWidget";
+
+const spaceGrotesk = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
+});
 
 export const metadata = {
   title: "Support Ticket Portal",
@@ -8,7 +15,7 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className={spaceGrotesk.variable}>
       <body>
         {children}
         <PlainChatWidget />
