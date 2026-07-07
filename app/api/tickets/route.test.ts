@@ -98,6 +98,16 @@ describe("POST /api/tickets", () => {
     expect(createIssue).not.toHaveBeenCalled();
   });
 
+  it("returns 502 when upsertTenant fails, before ever creating a Plain thread or GitHub issue", async () => {
+    vi.mocked(upsertTenant).mockRejectedValue(new Error("Plain API down"));
+
+    const response = await POST(makeRequest({ ...VALID_BODY, companyName: "Acme Inc" }));
+
+    expect(response.status).toBe(502);
+    expect(createThread).not.toHaveBeenCalled();
+    expect(createIssue).not.toHaveBeenCalled();
+  });
+
   it("tags the thread needs_github_issue when GitHub issue creation fails twice", async () => {
     vi.mocked(upsertCustomer).mockResolvedValue({ customerId: "cust_1" });
     vi.mocked(createThread).mockResolvedValue({ threadId: "th_1", ref: "T-1" });

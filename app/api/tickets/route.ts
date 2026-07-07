@@ -54,15 +54,15 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid ticket payload" }, { status: 400 });
   }
 
-  let tenantExternalId: string | undefined;
-  if (body.companyName) {
-    tenantExternalId = slugify(body.companyName);
-    await upsertTenant({ externalId: tenantExternalId, name: body.companyName });
-  }
-
   let threadId: string;
   let threadRef: string;
+  let tenantExternalId: string | undefined;
   try {
+    if (body.companyName) {
+      tenantExternalId = slugify(body.companyName);
+      await upsertTenant({ externalId: tenantExternalId, name: body.companyName });
+    }
+
     const customer = await upsertCustomer({
       email: body.email,
       fullName: body.fullName,
