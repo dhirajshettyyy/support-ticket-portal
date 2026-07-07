@@ -88,6 +88,12 @@ describe("POST /api/tickets", () => {
     expect(response.status).toBe(400);
   });
 
+  it("returns 400 when the description exceeds Plain's length limit", async () => {
+    const response = await POST(makeRequest({ ...VALID_BODY, description: "x".repeat(501) }));
+    expect(response.status).toBe(400);
+    expect(createThread).not.toHaveBeenCalled();
+  });
+
   it("returns 502 and never creates a GitHub issue when Plain thread creation fails", async () => {
     vi.mocked(upsertCustomer).mockResolvedValue({ customerId: "cust_1" });
     vi.mocked(createThread).mockRejectedValue(new Error("Plain API down"));

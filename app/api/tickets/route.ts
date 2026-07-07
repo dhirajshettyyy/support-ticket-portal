@@ -10,6 +10,7 @@ import {
   SEVERITIES,
   PRODUCT_AREAS,
   TICKET_TYPES,
+  DESCRIPTION_MAX_LENGTH,
   type Severity,
   type ProductArea,
   type TicketType,
@@ -38,6 +39,7 @@ function isValidTicketRequestBody(body: unknown): body is TicketRequestBody {
     typeof b.fullName === "string" &&
     typeof b.title === "string" &&
     typeof b.description === "string" &&
+    b.description.length <= DESCRIPTION_MAX_LENGTH &&
     typeof b.productArea === "string" &&
     (PRODUCT_AREAS as string[]).includes(b.productArea) &&
     typeof b.severity === "string" &&

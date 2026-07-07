@@ -7,6 +7,7 @@ import {
   SEVERITIES,
   PRODUCT_AREAS,
   TICKET_TYPES,
+  DESCRIPTION_MAX_LENGTH,
 } from "../taxonomy";
 
 describe("taxonomy", () => {
@@ -27,5 +28,9 @@ describe("taxonomy", () => {
     expect(SEVERITIES).toEqual(["low", "medium", "high", "urgent"]);
     expect(PRODUCT_AREAS).toEqual(["billing", "onboarding", "api", "dashboard", "other"]);
     expect(TICKET_TYPES).toEqual(["bug", "feature", "question"]);
+  });
+
+  it("caps description length at Plain's createThread limit", () => {
+    expect(DESCRIPTION_MAX_LENGTH).toBe(500);
   });
 });

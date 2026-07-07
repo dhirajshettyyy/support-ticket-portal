@@ -104,6 +104,17 @@ body {
   color: var(--text-muted);
 }
 
+.field-label-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.char-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
 .row {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

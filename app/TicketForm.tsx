@@ -1,8 +1,8 @@
 // app/TicketForm.tsx
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { PRODUCT_AREAS, SEVERITIES, TICKET_TYPES } from "@/lib/taxonomy";
+import { useState, type ChangeEvent, type FormEvent } from "react";
+import { PRODUCT_AREAS, SEVERITIES, TICKET_TYPES, DESCRIPTION_MAX_LENGTH } from "@/lib/taxonomy";
 
 interface SubmitResult {
   ticketRef: string;
@@ -13,6 +13,11 @@ export function TicketForm() {
   const [submitting, setSubmitting] = useState(false);
   const [result, setResult] = useState<SubmitResult | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [descriptionLength, setDescriptionLength] = useState(0);
+
+  function handleDescriptionChange(event: ChangeEvent<HTMLTextAreaElement>) {
+    setDescriptionLength(event.target.value.length);
+  }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -46,6 +51,7 @@ export function TicketForm() {
       const json = (await response.json()) as SubmitResult;
       setResult(json);
       form.reset();
+      setDescriptionLength(0);
     } catch {
       setError("Something went wrong submitting your ticket. Please try again.");
     } finally {
@@ -98,11 +104,18 @@ export function TicketForm() {
         <input id="title" type="text" name="title" placeholder="Short summary of the issue" required />
       </div>
       <div className="field">
-        <label htmlFor="description">Description</label>
+        <div className="field-label-row">
+          <label htmlFor="description">Description</label>
+          <span className="char-count">
+            {descriptionLength}/{DESCRIPTION_MAX_LENGTH}
+          </span>
+        </div>
         <textarea
           id="description"
           name="description"
           placeholder="What happened? Steps to reproduce, what you expected, etc."
+          maxLength={DESCRIPTION_MAX_LENGTH}
+          onChange={handleDescriptionChange}
           required
         />
       </div>
