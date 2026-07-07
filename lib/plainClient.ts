@@ -1,13 +1,40 @@
 const PLAIN_API_URL = "https://core-api.uk.plain.com/graphql/v1";
 
+export interface MutationFieldError {
+  field: string;
+  message: string;
+  type: string;
+}
+
+export interface MutationErrorPayload {
+  message: string;
+  code: string;
+  fields?: MutationFieldError[];
+}
+
 export class PlainApiError extends Error {
   code?: string;
+  fields?: MutationFieldError[];
 
-  constructor(message: string, code?: string) {
+  constructor(message: string, code?: string, fields?: MutationFieldError[]) {
     super(message);
     this.name = "PlainApiError";
     this.code = code;
+    this.fields = fields;
   }
+}
+
+/**
+ * Plain's field-level validation errors (e.g. on createThread/upsertCustomer)
+ * are only visible via error.fields, not the top-level message. Fold them
+ * into the thrown error's message so they show up in server logs without
+ * needing a second lookup.
+ */
+export function formatMutationError(error: MutationErrorPayload | null | undefined, fallback: string): string {
+  if (!error) return fallback;
+  if (!error.fields || error.fields.length === 0) return error.message;
+  const details = error.fields.map((f) => `${f.field}: ${f.message}`).join("; ");
+  return `${error.message} (${details})`;
 }
 
 interface GraphqlResponse<T> {

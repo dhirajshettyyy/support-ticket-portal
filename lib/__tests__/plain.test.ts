@@ -83,6 +83,28 @@ describe("lib/plain", () => {
     ).rejects.toThrow(PlainApiError);
   });
 
+  it("createThread includes field-level validation details in the thrown error message", async () => {
+    mockFetchOnce({
+      createThread: {
+        thread: null,
+        error: {
+          message: "There was a validation error.",
+          code: "VALIDATION",
+          fields: [{ field: "title", message: "must not be blank", type: "REQUIRED" }],
+        },
+      },
+    });
+    await expect(
+      createThread({
+        customerId: "cust_1",
+        title: "",
+        description: "Something broke",
+        priority: 1,
+        threadFields: [],
+      })
+    ).rejects.toThrow("There was a validation error. (title: must not be blank)");
+  });
+
   it("createThread returns the thread id and ref on success", async () => {
     mockFetchOnce({ createThread: { thread: { id: "th_1", ref: "T-1" }, error: null } });
     const result = await createThread({

@@ -1,4 +1,4 @@
-import { plainRequest, PlainApiError } from "./plainClient";
+import { plainRequest, PlainApiError, formatMutationError, type MutationErrorPayload } from "./plainClient";
 
 export type ThreadFieldType = "STRING" | "NUMBER" | "BOOL";
 
@@ -20,12 +20,12 @@ export async function upsertTenant(params: UpsertTenantParams): Promise<{ tenant
     mutation UpsertTenant($input: UpsertTenantInput!) {
       upsertTenant(input: $input) {
         tenant { id }
-        error { message code }
+        error { message code fields { field message type } }
       }
     }
   `;
   const data = await plainRequest<{
-    upsertTenant: { tenant: { id: string } | null; error: { message: string; code: string } | null };
+    upsertTenant: { tenant: { id: string } | null; error: MutationErrorPayload | null };
   }>(query, {
     input: {
       identifier: { externalId: params.externalId },
@@ -35,7 +35,11 @@ export async function upsertTenant(params: UpsertTenantParams): Promise<{ tenant
   });
 
   if (data.upsertTenant.error || !data.upsertTenant.tenant) {
-    throw new PlainApiError(data.upsertTenant.error?.message ?? "Failed to upsert tenant");
+    throw new PlainApiError(
+      formatMutationError(data.upsertTenant.error, "Failed to upsert tenant"),
+      data.upsertTenant.error?.code,
+      data.upsertTenant.error?.fields
+    );
   }
 
   return { tenantId: data.upsertTenant.tenant.id };
@@ -52,12 +56,12 @@ export async function upsertCustomer(params: UpsertCustomerParams): Promise<{ cu
     mutation UpsertCustomer($input: UpsertCustomerInput!) {
       upsertCustomer(input: $input) {
         customer { id }
-        error { message code }
+        error { message code fields { field message type } }
       }
     }
   `;
   const data = await plainRequest<{
-    upsertCustomer: { customer: { id: string } | null; error: { message: string; code: string } | null };
+    upsertCustomer: { customer: { id: string } | null; error: MutationErrorPayload | null };
   }>(query, {
     input: {
       identifier: { emailAddress: params.email },
@@ -71,7 +75,11 @@ export async function upsertCustomer(params: UpsertCustomerParams): Promise<{ cu
   });
 
   if (data.upsertCustomer.error || !data.upsertCustomer.customer) {
-    throw new PlainApiError(data.upsertCustomer.error?.message ?? "Failed to upsert customer");
+    throw new PlainApiError(
+      formatMutationError(data.upsertCustomer.error, "Failed to upsert customer"),
+      data.upsertCustomer.error?.code,
+      data.upsertCustomer.error?.fields
+    );
   }
 
   const customerId = data.upsertCustomer.customer.id;
@@ -87,12 +95,12 @@ async function addCustomerToTenants(params: { customerId: string; tenantExternal
   const query = `
     mutation AddCustomerToTenants($input: AddCustomerToTenantsInput!) {
       addCustomerToTenants(input: $input) {
-        error { message code }
+        error { message code fields { field message type } }
       }
     }
   `;
   const data = await plainRequest<{
-    addCustomerToTenants: { error: { message: string; code: string } | null };
+    addCustomerToTenants: { error: MutationErrorPayload | null };
   }>(query, {
     input: {
       customerIdentifier: { customerId: params.customerId },
@@ -101,7 +109,11 @@ async function addCustomerToTenants(params: { customerId: string; tenantExternal
   });
 
   if (data.addCustomerToTenants.error) {
-    throw new PlainApiError(data.addCustomerToTenants.error.message);
+    throw new PlainApiError(
+      formatMutationError(data.addCustomerToTenants.error, "Failed to add customer to tenant"),
+      data.addCustomerToTenants.error.code,
+      data.addCustomerToTenants.error.fields
+    );
   }
 }
 
@@ -119,14 +131,14 @@ export async function createThread(params: CreateThreadParams): Promise<{ thread
     mutation CreateThread($input: CreateThreadInput!) {
       createThread(input: $input) {
         thread { id ref }
-        error { message code }
+        error { message code fields { field message type } }
       }
     }
   `;
   const data = await plainRequest<{
     createThread: {
       thread: { id: string; ref: string } | null;
-      error: { message: string; code: string } | null;
+      error: MutationErrorPayload | null;
     };
   }>(query, {
     input: {
@@ -140,7 +152,11 @@ export async function createThread(params: CreateThreadParams): Promise<{ thread
   });
 
   if (data.createThread.error || !data.createThread.thread) {
-    throw new PlainApiError(data.createThread.error?.message ?? "Failed to create thread");
+    throw new PlainApiError(
+      formatMutationError(data.createThread.error, "Failed to create thread"),
+      data.createThread.error?.code,
+      data.createThread.error?.fields
+    );
   }
 
   return { threadId: data.createThread.thread.id, ref: data.createThread.thread.ref };
@@ -157,12 +173,12 @@ export async function upsertThreadField(params: {
   const query = `
     mutation UpsertThreadField($input: UpsertThreadFieldInput!) {
       upsertThreadField(input: $input) {
-        error { message code }
+        error { message code fields { field message type } }
       }
     }
   `;
   const data = await plainRequest<{
-    upsertThreadField: { error: { message: string; code: string } | null };
+    upsertThreadField: { error: MutationErrorPayload | null };
   }>(query, {
     input: {
       identifier: { threadId: params.threadId, key: params.key },
@@ -174,7 +190,11 @@ export async function upsertThreadField(params: {
   });
 
   if (data.upsertThreadField.error) {
-    throw new PlainApiError(data.upsertThreadField.error.message);
+    throw new PlainApiError(
+      formatMutationError(data.upsertThreadField.error, "Failed to upsert thread field"),
+      data.upsertThreadField.error.code,
+      data.upsertThreadField.error.fields
+    );
   }
 }
 
@@ -182,16 +202,20 @@ export async function markThreadAsDone(threadId: string): Promise<void> {
   const query = `
     mutation MarkThreadAsDone($input: MarkThreadAsDoneInput!) {
       markThreadAsDone(input: $input) {
-        error { message code }
+        error { message code fields { field message type } }
       }
     }
   `;
   const data = await plainRequest<{
-    markThreadAsDone: { error: { message: string; code: string } | null };
+    markThreadAsDone: { error: MutationErrorPayload | null };
   }>(query, { input: { threadId } });
 
   if (data.markThreadAsDone.error) {
-    throw new PlainApiError(data.markThreadAsDone.error.message);
+    throw new PlainApiError(
+      formatMutationError(data.markThreadAsDone.error, "Failed to mark thread as done"),
+      data.markThreadAsDone.error.code,
+      data.markThreadAsDone.error.fields
+    );
   }
 }
 
