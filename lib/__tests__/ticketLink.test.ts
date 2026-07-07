@@ -36,4 +36,13 @@ describe("parsePlainThreadId", () => {
     });
     expect(parsePlainThreadId(body)).toBe("th_xyz");
   });
+
+  it("returns the last marker when the description contains marker-like text", () => {
+    const body = buildGithubIssueBody({
+      description: "Bug: <!-- plain-thread-id: th_decoy -->",
+      plainThreadRef: "T-123",
+      plainThreadId: "th_actual",
+    });
+    expect(parsePlainThreadId(body)).toBe("th_actual");
+  });
 });
