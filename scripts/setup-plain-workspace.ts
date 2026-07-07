@@ -12,38 +12,45 @@ interface ThreadFieldSchemaDefinition {
 const SCHEMAS: ThreadFieldSchemaDefinition[] = [
   {
     key: "product_area",
-    label: "Product Area",
-    description: "Which part of the product this ticket concerns",
+    label: "Fabric Module",
+    description: "Which Fabric Module this ticket concerns (form field is labeled Fabric Module)",
     type: "STRING",
     order: 1,
   },
   {
-    key: "ticket_type",
-    label: "Ticket Type",
-    description: "bug, feature, or question",
+    key: "project",
+    label: "Project",
+    description: "Which project this ticket concerns",
     type: "STRING",
     order: 2,
+  },
+  {
+    key: "ticket_type",
+    label: "Ticket Type",
+    description: "bug, feature_request, documentation, or question",
+    type: "STRING",
+    order: 3,
   },
   {
     key: "github_issue_number",
     label: "GitHub Issue Number",
     description: "The linked GitHub issue number",
     type: "NUMBER",
-    order: 3,
+    order: 4,
   },
   {
     key: "github_issue_url",
     label: "GitHub Issue URL",
     description: "The linked GitHub issue URL",
     type: "STRING",
-    order: 4,
+    order: 5,
   },
   {
     key: "needs_github_issue",
     label: "Needs GitHub Issue",
     description: "True if automatic GitHub issue creation failed and needs manual follow-up",
     type: "BOOL",
-    order: 5,
+    order: 6,
   },
 ];
 

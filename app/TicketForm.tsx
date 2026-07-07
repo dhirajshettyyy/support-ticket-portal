@@ -2,7 +2,15 @@
 "use client";
 
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import { PRODUCT_AREAS, SEVERITIES, TICKET_TYPES, DESCRIPTION_MAX_LENGTH } from "@/lib/taxonomy";
+import {
+  FABRIC_MODULES,
+  PROJECTS,
+  PRIORITIES,
+  PRIORITY_LABELS,
+  TICKET_TYPES,
+  TICKET_TYPE_LABELS,
+  DESCRIPTION_MAX_LENGTH,
+} from "@/lib/taxonomy";
 
 interface SubmitResult {
   ticketRef: string;
@@ -32,8 +40,9 @@ export function TicketForm() {
       companyName: formData.get("companyName") || undefined,
       title: formData.get("title"),
       description: formData.get("description"),
-      productArea: formData.get("productArea"),
-      severity: formData.get("severity"),
+      fabricModule: formData.get("fabricModule"),
+      project: formData.get("project"),
+      priority: formData.get("priority"),
       ticketType: formData.get("ticketType"),
     };
 
@@ -122,27 +131,40 @@ export function TicketForm() {
       </div>
       <div className="row">
         <div className="field">
-          <label htmlFor="productArea">Product area</label>
-          <select id="productArea" name="productArea" required defaultValue="">
+          <label htmlFor="fabricModule">Fabric Module</label>
+          <select id="fabricModule" name="fabricModule" required defaultValue="">
             <option value="" disabled>
               Select
             </option>
-            {PRODUCT_AREAS.map((area) => (
-              <option key={area} value={area}>
-                {area}
+            {FABRIC_MODULES.map((module) => (
+              <option key={module} value={module}>
+                {module}
               </option>
             ))}
           </select>
         </div>
         <div className="field">
-          <label htmlFor="severity">Severity</label>
-          <select id="severity" name="severity" required defaultValue="">
+          <label htmlFor="project">Project</label>
+          <select id="project" name="project" required defaultValue="">
             <option value="" disabled>
               Select
             </option>
-            {SEVERITIES.map((severity) => (
-              <option key={severity} value={severity}>
-                {severity}
+            {PROJECTS.map((project) => (
+              <option key={project} value={project}>
+                {project}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="field">
+          <label htmlFor="priority">Priority</label>
+          <select id="priority" name="priority" required defaultValue="">
+            <option value="" disabled>
+              Select
+            </option>
+            {PRIORITIES.map((priority) => (
+              <option key={priority} value={priority}>
+                {PRIORITY_LABELS[priority]}
               </option>
             ))}
           </select>
@@ -155,7 +177,7 @@ export function TicketForm() {
             </option>
             {TICKET_TYPES.map((type) => (
               <option key={type} value={type}>
-                {type}
+                {TICKET_TYPE_LABELS[type]}
               </option>
             ))}
           </select>

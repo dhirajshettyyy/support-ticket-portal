@@ -28,8 +28,9 @@ const VALID_BODY = {
   fullName: "Jane Doe",
   title: "Login broken",
   description: "Cannot log in with SSO",
-  productArea: "api",
-  severity: "high",
+  fabricModule: "ONIX",
+  project: "ION",
+  priority: "S2",
   ticketType: "bug",
 };
 
@@ -50,7 +51,15 @@ describe("POST /api/tickets", () => {
     expect(json).toEqual({ ticketRef: "T-1", githubIssueUrl: "https://github.com/acme/repo/issues/42" });
     expect(upsertTenant).not.toHaveBeenCalled();
     expect(createThread).toHaveBeenCalledWith(
-      expect.objectContaining({ customerId: "cust_1", priority: 1 })
+      expect.objectContaining({
+        customerId: "cust_1",
+        priority: 1,
+        threadFields: [
+          { key: "product_area", type: "STRING", stringValue: "ONIX" },
+          { key: "project", type: "STRING", stringValue: "ION" },
+          { key: "ticket_type", type: "STRING", stringValue: "bug" },
+        ],
+      })
     );
     expect(upsertThreadField).toHaveBeenCalledWith(
       expect.objectContaining({ threadId: "th_1", key: "github_issue_number", numberValue: 42 })
@@ -88,10 +97,10 @@ describe("POST /api/tickets", () => {
   });
 
   it("returns 400 with a message naming the invalid enum value's field", async () => {
-    const response = await POST(makeRequest({ ...VALID_BODY, severity: "banana" }));
+    const response = await POST(makeRequest({ ...VALID_BODY, priority: "banana" }));
     const json = await response.json();
     expect(response.status).toBe(400);
-    expect(json.error).toContain("severity must be one of");
+    expect(json.error).toContain("priority must be one of");
   });
 
   it("returns 400 with a message when the description exceeds Plain's length limit", async () => {

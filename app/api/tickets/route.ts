@@ -3,16 +3,19 @@ import { upsertTenant, upsertCustomer, createThread, upsertThreadField } from "@
 import { createIssue } from "@/lib/github";
 import { buildGithubIssueBody } from "@/lib/ticketLink";
 import {
-  severityToPlainPriority,
-  severityToGithubLabel,
-  productAreaToGithubLabel,
+  priorityToPlainPriority,
+  priorityToGithubLabel,
+  fabricModuleToGithubLabel,
+  projectToGithubLabel,
   ticketTypeToGithubLabel,
-  SEVERITIES,
-  PRODUCT_AREAS,
+  PRIORITIES,
+  FABRIC_MODULES,
+  PROJECTS,
   TICKET_TYPES,
   DESCRIPTION_MAX_LENGTH,
-  type Severity,
-  type ProductArea,
+  type Priority,
+  type FabricModule,
+  type Project,
   type TicketType,
 } from "@/lib/taxonomy";
 
@@ -22,8 +25,9 @@ interface TicketRequestBody {
   companyName?: string;
   title: string;
   description: string;
-  productArea: ProductArea;
-  severity: Severity;
+  fabricModule: FabricModule;
+  project: Project;
+  priority: Priority;
   ticketType: TicketType;
 }
 
@@ -54,11 +58,14 @@ function getValidationErrors(body: unknown): string[] {
     errors.push(`description must be ${DESCRIPTION_MAX_LENGTH} characters or fewer`);
   }
 
-  if (typeof b.productArea !== "string" || !(PRODUCT_AREAS as string[]).includes(b.productArea)) {
-    errors.push(`productArea must be one of: ${PRODUCT_AREAS.join(", ")}`);
+  if (typeof b.fabricModule !== "string" || !(FABRIC_MODULES as string[]).includes(b.fabricModule)) {
+    errors.push(`fabricModule must be one of: ${FABRIC_MODULES.join(", ")}`);
   }
-  if (typeof b.severity !== "string" || !(SEVERITIES as string[]).includes(b.severity)) {
-    errors.push(`severity must be one of: ${SEVERITIES.join(", ")}`);
+  if (typeof b.project !== "string" || !(PROJECTS as string[]).includes(b.project)) {
+    errors.push(`project must be one of: ${PROJECTS.join(", ")}`);
+  }
+  if (typeof b.priority !== "string" || !(PRIORITIES as string[]).includes(b.priority)) {
+    errors.push(`priority must be one of: ${PRIORITIES.join(", ")}`);
   }
   if (typeof b.ticketType !== "string" || !(TICKET_TYPES as string[]).includes(b.ticketType)) {
     errors.push(`ticketType must be one of: ${TICKET_TYPES.join(", ")}`);
@@ -96,9 +103,10 @@ export async function POST(request: NextRequest) {
       tenantExternalId,
       title: body.title,
       description: body.description,
-      priority: severityToPlainPriority(body.severity),
+      priority: priorityToPlainPriority(body.priority),
       threadFields: [
-        { key: "product_area", type: "STRING", stringValue: body.productArea },
+        { key: "product_area", type: "STRING", stringValue: body.fabricModule },
+        { key: "project", type: "STRING", stringValue: body.project },
         { key: "ticket_type", type: "STRING", stringValue: body.ticketType },
       ],
     });
@@ -115,8 +123,9 @@ export async function POST(request: NextRequest) {
     plainThreadId: threadId,
   });
   const labels = [
-    severityToGithubLabel(body.severity),
-    productAreaToGithubLabel(body.productArea),
+    priorityToGithubLabel(body.priority),
+    fabricModuleToGithubLabel(body.fabricModule),
+    projectToGithubLabel(body.project),
     ticketTypeToGithubLabel(body.ticketType),
   ];
 
