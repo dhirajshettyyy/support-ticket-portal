@@ -1,3 +1,10 @@
+import { TicketForm } from "./TicketForm";
+
 export default function Home() {
-  return <main>Support ticket portal coming soon.</main>;
+  return (
+    <main>
+      <h1>Submit a support ticket</h1>
+      <TicketForm />
+    </main>
+  );
 }
