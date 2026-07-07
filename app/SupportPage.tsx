@@ -36,18 +36,12 @@ export function SupportPage() {
         </a>
       </header>
 
-      <main className="landing">
-        <section className="hero">
-          <div className="hero-frame">
-            <span className="corner corner-tl" />
-            <span className="corner corner-tr" />
-            <span className="corner corner-bl" />
-            <span className="corner corner-br" />
-            <h1>Support</h1>
-            <p>Find answers, explore guides, or get in touch with our team.</p>
-          </div>
-        </section>
+      <section className="hero">
+        <h1>Support</h1>
+        <p>Find answers, explore guides, or get in touch with our team.</p>
+      </section>
 
+      <main className="landing">
         <section className="docs-card">
           <h2>Browse the docs</h2>
           <p>Guides, API references, and how-tos for everything NFH.</p>

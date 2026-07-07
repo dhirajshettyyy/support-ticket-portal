@@ -281,48 +281,16 @@ textarea:focus {
 .landing {
   max-width: 720px;
   margin: 0 auto;
-  padding: 4rem 1.25rem 3rem;
+  padding: 2.5rem 1.25rem 3rem;
   background-image: radial-gradient(var(--dot) 1px, transparent 1px);
   background-size: 18px 18px;
 }
 
 .hero {
-  text-align: left;
-  margin-bottom: 3rem;
-}
-
-.hero-frame {
-  position: relative;
-  border: 1.5px solid var(--text);
-  padding: 3rem 2rem;
-  background: var(--bg);
-}
-
-.corner {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: var(--text);
-}
-
-.corner-tl {
-  top: -4.5px;
-  left: -4.5px;
-}
-
-.corner-tr {
-  top: -4.5px;
-  right: -4.5px;
-}
-
-.corner-bl {
-  bottom: -4.5px;
-  left: -4.5px;
-}
-
-.corner-br {
-  bottom: -4.5px;
-  right: -4.5px;
+  padding: 3rem 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--border);
+  background-image: radial-gradient(var(--dot) 1px, transparent 1px);
+  background-size: 18px 18px;
 }
 
 .hero h1 {
