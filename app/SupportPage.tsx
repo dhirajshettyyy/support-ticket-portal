@@ -6,6 +6,7 @@ import { TicketForm } from "./TicketForm";
 
 const DOCS_URL = "https://docs.nfh.global";
 const SITE_URL = "https://networksforhumanity.org";
+const HELP_CENTER_URL = "https://nfh-fwd.support.site/";
 
 export function SupportPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
@@ -45,9 +46,14 @@ export function SupportPage() {
         <section className="docs-card">
           <h2>Browse the docs</h2>
           <p>Guides, API references, and how-tos for everything NFH.</p>
-          <a className="button-primary" href={DOCS_URL} target="_blank" rel="noopener noreferrer">
-            Go to docs.nfh.global
-          </a>
+          <div className="docs-card-actions">
+            <a className="button-primary" href={DOCS_URL} target="_blank" rel="noopener noreferrer">
+              Go to docs.nfh.global
+            </a>
+            <a className="button-secondary" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
+              Help Center
+            </a>
+          </div>
         </section>
 
         <section className="help-section">
