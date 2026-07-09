@@ -3,6 +3,9 @@
 
 import { useEffect, useState } from "react";
 import { TicketForm } from "./TicketForm";
+import { PlainChatWidget } from "./PlainChatWidget";
+
+const CHAT_EMBED_SELECTOR = "#plain-chat-embed";
 
 const DOCS_URL = "https://docs.nfh.global";
 const SITE_URL = "https://networksforhumanity.org";
@@ -56,13 +59,21 @@ export function SupportPage() {
           </div>
         </section>
 
+        <section className="chat-card">
+          <h2>Chat with our team</h2>
+          <p>Ari, our support assistant, is ready to help — and can loop in a human when needed.</p>
+          <div id="plain-chat-embed" className="chat-embed" />
+        </section>
+
         <section className="help-section">
-          <h2>Can&apos;t find what you&apos;re looking for?</h2>
-          <p>Our team is happy to help directly — or chat with us using the bubble in the corner.</p>
+          <h2>Have a specific issue to track?</h2>
+          <p>Raise a structured ticket and we&apos;ll follow up by email.</p>
           <button type="button" className="button-primary" onClick={() => setIsFormOpen(true)}>
             Raise a ticket
           </button>
         </section>
+
+        <PlainChatWidget embedAt={CHAT_EMBED_SELECTOR} />
 
         <footer className="footer">
           <a href={SITE_URL}>networksforhumanity.org</a>

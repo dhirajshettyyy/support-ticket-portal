@@ -336,6 +336,36 @@ textarea:focus {
   font-size: 0.9375rem;
 }
 
+.chat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  text-align: center;
+  margin: 0 0 3rem;
+}
+
+.chat-card h2 {
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+.chat-card p {
+  color: var(--text-muted);
+  margin: 0 0 1.5rem;
+  font-size: 0.9375rem;
+}
+
+.chat-embed {
+  height: 480px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  text-align: left;
+}
+
 .help-section {
   text-align: center;
   padding: 2rem 0 0;
