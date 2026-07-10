@@ -6,7 +6,7 @@ import { FABRIC_COMPONENT_LINKS } from "./fabricComponents";
 
 const DOCS_URL = "https://docs.nfh.global";
 const SITE_URL = "https://networksforhumanity.org";
-const HELP_CENTER_URL = "https://nfh-fwd.support.site/";
+const HELP_CENTER_URL = "https://fabric.support.site/";
 
 export function SupportPage() {
   return (

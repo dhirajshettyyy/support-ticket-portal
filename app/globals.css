@@ -265,13 +265,13 @@ textarea:focus {
 .landing {
   max-width: 720px;
   margin: 0 auto;
-  padding: 3rem 1.5rem 3rem;
+  padding: 1.5rem 1.5rem 3rem;
   background: var(--bg);
 }
 
 
 .hero {
-  padding: 4.5rem 1.5rem 3.5rem;
+  padding: 4.5rem 1.5rem 2rem;
   background-color: var(--hero-bg);
   background-image: radial-gradient(var(--dot) 1px, transparent 1px);
   background-size: 18px 18px;
@@ -292,7 +292,7 @@ textarea:focus {
 }
 
 .chat-entry {
-  margin: 2.5rem 0 3rem;
+  margin: 1rem 0 3rem;
 }
 
 .chat-compact {
