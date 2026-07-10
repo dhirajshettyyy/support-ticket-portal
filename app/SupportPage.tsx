@@ -1,30 +1,14 @@
 // app/SupportPage.tsx
 "use client";
 
-import { useEffect, useState } from "react";
-import { TicketForm } from "./TicketForm";
-import { PlainChatWidget } from "./PlainChatWidget";
-
-const CHAT_EMBED_SELECTOR = "#plain-chat-embed";
+import { ChatEntry } from "./ChatEntry";
+import { FABRIC_COMPONENT_LINKS } from "./fabricComponents";
 
 const DOCS_URL = "https://docs.nfh.global";
 const SITE_URL = "https://networksforhumanity.org";
 const HELP_CENTER_URL = "https://nfh-fwd.support.site/";
 
 export function SupportPage() {
-  const [isFormOpen, setIsFormOpen] = useState(false);
-
-  useEffect(() => {
-    if (!isFormOpen) return;
-
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setIsFormOpen(false);
-    }
-
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isFormOpen]);
-
   return (
     <>
       <header className="site-nav">
@@ -46,54 +30,113 @@ export function SupportPage() {
       </section>
 
       <main className="landing">
-        <section className="docs-card">
-          <h2>Browse the docs</h2>
-          <p>Guides, API references, and how-tos for everything NFH.</p>
-          <div className="docs-card-actions">
-            <a className="button-primary" href={DOCS_URL} target="_blank" rel="noopener noreferrer">
-              Go to docs.nfh.global
-            </a>
-            <a className="button-secondary" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
+        <ChatEntry />
+
+        <section className="docs-section">
+          <p className="docs-section-intro">
+            Explore documentation for each core component of the NFH Fabric, or browse the{" "}
+            <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
+              full documentation
+            </a>{" "}
+            and{" "}
+            <a href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
               Help Center
             </a>
+            .
+          </p>
+          <div className="fabric-links">
+            {FABRIC_COMPONENT_LINKS.map((component) => (
+              <a
+                key={component.name}
+                className="fabric-link"
+                href={component.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {component.name}
+              </a>
+            ))}
           </div>
-        </section>
-
-        <section className="chat-card">
-          <h2>Chat with our team</h2>
-          <p>Ari, our support assistant, is ready to help — and can loop in a human when needed.</p>
-          <div id="plain-chat-embed" className="chat-embed" />
         </section>
 
         <section className="help-section">
-          <h2>Have a specific issue to track?</h2>
-          <p>Raise a structured ticket and we&apos;ll follow up by email.</p>
-          <button type="button" className="button-primary" onClick={() => setIsFormOpen(true)}>
-            Raise a ticket
-          </button>
+          <h2>Still need help?</h2>
+          <p>Browse guides and answers to common questions in our Help Center.</p>
+          <a className="button-primary" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
+            helpcenter
+          </a>
         </section>
+      </main>
 
-        <PlainChatWidget embedAt={CHAT_EMBED_SELECTOR} />
-
-        <footer className="footer">
-          <a href={SITE_URL}>networksforhumanity.org</a>
-        </footer>
-
-        {isFormOpen && (
-          <div className="modal-overlay" onClick={() => setIsFormOpen(false)}>
-            <div className="modal-content" onClick={(event) => event.stopPropagation()}>
-              <button type="button" className="modal-close" onClick={() => setIsFormOpen(false)} aria-label="Close">
-                &times;
-              </button>
-              <div className="header">
-                <h1>Submit a support ticket</h1>
-                <p>Tell us what&apos;s going on and we&apos;ll get back to you as soon as possible.</p>
-              </div>
-              <TicketForm />
+      <footer className="site-footer">
+        <div className="site-footer-inner">
+          <div className="footer-col">
+            <h3>Address</h3>
+            <div className="footer-address">
+              <h4>USA</h4>
+              <p>8 The Green #14729, Dover, Delaware, DE 19901, USA</p>
+            </div>
+            <div className="footer-address">
+              <h4>Singapore</h4>
+              <p>1 Harbourfront Avenue, #14-07, Keppel Bay Tower, Singapore - 098632</p>
+            </div>
+            <div className="footer-address">
+              <h4>Switzerland</h4>
+              <p>In progress</p>
             </div>
           </div>
-        )}
-      </main>
+
+          <div className="footer-col">
+            <h3>Quick Links</h3>
+            <nav className="footer-links">
+              <a href="https://networksforhumanity.org/about-us/" target="_blank" rel="noopener noreferrer">
+                About NFH
+              </a>
+              <a href="https://finternetlab.io/" target="_blank" rel="noopener noreferrer">
+                Finternet
+              </a>
+              <a href="https://becknprotocol.io/" target="_blank" rel="noopener noreferrer">
+                Beckn
+              </a>
+              <a href="https://dedi.global/" target="_blank" rel="noopener noreferrer">
+                DeDi Global
+              </a>
+              <a href="https://www.cdir.global/" target="_blank" rel="noopener noreferrer">
+                C:\&gt;DIR
+              </a>
+              <a href="https://youtu.be/_yeqoEUA85w" target="_blank" rel="noopener noreferrer">
+                NFH Vision
+              </a>
+              <a href="https://networksforhumanity.org/privacy-policy/" target="_blank" rel="noopener noreferrer">
+                Privacy Policy
+              </a>
+              <a href="https://networksforhumanity.org/newsletter-archive/" target="_blank" rel="noopener noreferrer">
+                Newsletter Archive
+              </a>
+            </nav>
+          </div>
+
+          <div className="footer-col footer-contact">
+            <p>Want to explore supporting NFH&apos;s missions?</p>
+            <p className="footer-contact-cta">Write to Us.</p>
+            <a href="mailto:connect@networksforhumanity.org">connect@networksforhumanity.org</a>
+          </div>
+        </div>
+
+        <div className="site-footer-bottom">
+          <div className="footer-logo">
+            <span className="footer-logo-mark">NFH</span>
+            <span className="footer-logo-sub">
+              NETWORKS
+              <br />
+              FOR
+              <br />
+              HUMANITY
+            </span>
+          </div>
+          <p>&copy; 2026 Networks for Humanity, All rights reserved.</p>
+        </div>
+      </footer>
     </>
   );
 }
