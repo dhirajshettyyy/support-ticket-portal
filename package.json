@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest run",
-    "test:watch": "vitest",
-    "setup:plain": "tsx scripts/setup-plain-workspace.ts"
+    "test:watch": "vitest"
   },
   "dependencies": {
     "next": "^15.0.0",
