@@ -25,8 +25,8 @@ export function SupportPage() {
       </header>
 
       <section className="hero">
-        <h1>Support</h1>
-        <p>Find answers, explore guides, or get in touch with our team.</p>
+        <h1>Welcome to NFH Support</h1>
+        <p>Find what you need faster. Explore our technical documentation or enter your question below to search with AI.</p>
       </section>
 
       <main className="landing">
@@ -37,10 +37,6 @@ export function SupportPage() {
             Explore documentation for each core component of the NFH Fabric, or browse the{" "}
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
               full documentation
-            </a>{" "}
-            and{" "}
-            <a href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
-              Help Center
             </a>
             .
           </p>
@@ -60,10 +56,10 @@ export function SupportPage() {
         </section>
 
         <section className="help-section">
-          <h2>Still need help?</h2>
-          <p>Browse guides and answers to common questions in our Help Center.</p>
+          <h2>Still have questions?</h2>
+          <p>Raise a query and connect directly with our team.</p>
           <a className="button-primary" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
-            helpcenter
+            Help Center
           </a>
         </section>
       </main>
@@ -79,6 +75,10 @@ export function SupportPage() {
             <div className="footer-address">
               <h4>Singapore</h4>
               <p>1 Harbourfront Avenue, #14-07, Keppel Bay Tower, Singapore - 098632</p>
+            </div>
+            <div className="footer-address">
+              <h4>India</h4>
+              <p>ICP Brunton Central, 7/4 Brunton Road, Bangalore 560025, India</p>
             </div>
             <div className="footer-address">
               <h4>Switzerland</h4>
@@ -134,7 +134,7 @@ export function SupportPage() {
               HUMANITY
             </span>
           </div>
-          <p>&copy; 2026 Networks for Humanity, All rights reserved.</p>
+          <p>&copy; 2026 Networks for Humanity. All rights reserved.</p>
         </div>
       </footer>
     </>

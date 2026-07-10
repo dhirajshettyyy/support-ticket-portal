@@ -22,7 +22,7 @@ export function ChatEntry() {
               strokeLinejoin="round"
             />
           </svg>
-          Hey, How can I help you?
+          Hey, how can I help you?
         </button>
       )}
       <div className={isExpanded ? "chat-embed-shell chat-embed-shell-expanded" : "chat-embed-shell"}>
