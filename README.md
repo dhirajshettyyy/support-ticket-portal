@@ -1,52 +1,34 @@
 # Support Ticket Portal
 
-Customers submit a structured ticket once; it is created as both a Plain
-thread (for support) and a GitHub issue (for engineering), cross-linked and
-kept in sync when either side is closed. See
-`docs/superpowers/specs/2026-07-07-support-ticket-portal-design.md` for the
-full design.
+NFH's support landing page — a branded hero, an embedded Plain (Nova/Ari)
+live chat widget, links to Fabric component documentation, and a Help
+Center button. No backend, no database, no environment variables required.
+
+For the full picture — what's live, what's archived and why, current
+security posture, and how to pick this back up for future work — see
+[`BUILD_CONTEXT.md`](./BUILD_CONTEXT.md).
 
 ## Setup
 
-1. `npm install`
-2. Copy `.env.example` to `.env.local` and fill in:
-   - `PLAIN_API_KEY` — needs `thread:create`, `thread:read`, `tenant:create`,
-     `threadField:create`, `threadField:update`, `threadFieldSchema:create`,
-     `threadFieldSchema:read` permissions.
-   - `GITHUB_TOKEN` — a fine-grained PAT scoped to Issues read/write on the
-     target repo.
-   - `GITHUB_REPO` — `owner/repo` of the target repo.
-   - `GITHUB_WEBHOOK_SECRET` — a secret you choose; used to verify inbound
-     GitHub webhook requests.
-   - `PLAIN_WEBHOOK_SECRET` — the HMAC secret configured on your Plain
-     webhook target.
-3. Run `npm run setup:plain` once to create the required Thread Field
-   Schemas in your Plain workspace (`product_area`, `ticket_type`,
-   `github_issue_number`, `github_issue_url`, `needs_github_issue`).
-4. In GitHub, go to the target repo's Settings → Webhooks → Add webhook:
-   - Payload URL: `https://<your-deployment>/api/webhooks/github`
-   - Content type: `application/json`
-   - Secret: same value as `GITHUB_WEBHOOK_SECRET`
-   - Events: select "Issues" only.
-5. In Plain, go to Settings → Webhooks → Add webhook target:
-   - URL: `https://<your-deployment>/api/webhooks/plain`
-   - Events: `thread.thread_status_transitioned`
-   - Note the signing secret Plain gives you and set it as
-     `PLAIN_WEBHOOK_SECRET`.
+```
+npm install
+npm run dev
+```
+
+That's it — no `.env.local` needed for the app as it currently stands.
 
 ## Development
 
-- `npm run dev` — start the local dev server.
-- `npm test` — run the unit and integration test suite.
-- `npm run build` — production build.
+- `npm run dev` — local dev server
+- `npm test` — test suite (currently no live tests; the ones that existed
+  belonged to the archived ticket workflow, see below)
+- `npm run build` — production build
 
-## Manual end-to-end verification
+## About the retired ticket workflow
 
-1. Submit a ticket through the form at `/`.
-2. In Plain, confirm a new thread appears with the correct title, priority,
-   and `product_area`/`ticket_type` thread field values.
-3. In GitHub, confirm a new issue appears in the target repo with matching
-   labels and a body containing the Plain ticket reference.
-4. Close the GitHub issue. Confirm the Plain thread's status flips to Done.
-5. Submit a second ticket, then mark its Plain thread as Done instead.
-   Confirm the corresponding GitHub issue closes.
+This project originally also raised tickets as linked Plain threads +
+GitHub issues, kept in sync via webhooks. That code has been moved to
+`archive/` (not deleted — full git history preserved) after a security
+review found the live endpoint reachable, unauthenticated, and with a
+tenant-hijacking flaw. See [`archive/README.md`](./archive/README.md)
+before reviving any of it — it needs real fixes, not just a restore.
