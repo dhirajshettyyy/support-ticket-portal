@@ -1,12 +1,7 @@
 // app/SupportPage.tsx
-"use client";
+import { HomeBody } from "./HomeBody";
 
-import { ChatEntry } from "./ChatEntry";
-import { FABRIC_COMPONENT_LINKS } from "./fabricComponents";
-
-const DOCS_URL = "https://docs.nfh.global";
 const SITE_URL = "https://networksforhumanity.org";
-const HELP_CENTER_URL = "https://fabric.support.site/";
 
 export function SupportPage() {
   return (
@@ -24,45 +19,7 @@ export function SupportPage() {
         </a>
       </header>
 
-      <section className="hero">
-        <h1>Welcome to NFH Support</h1>
-        <p>Find what you need faster. Explore our technical documentation or enter your question below to search with AI.</p>
-      </section>
-
-      <main className="landing">
-        <ChatEntry />
-
-        <section className="docs-section">
-          <p className="docs-section-intro">
-            Explore documentation for each core component of the NFH Fabric, or browse the{" "}
-            <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
-              full documentation
-            </a>
-            .
-          </p>
-          <div className="fabric-links">
-            {FABRIC_COMPONENT_LINKS.map((component) => (
-              <a
-                key={component.name}
-                className="fabric-link"
-                href={component.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {component.name}
-              </a>
-            ))}
-          </div>
-        </section>
-
-        <section className="help-section">
-          <h2>Still have questions?</h2>
-          <p>Raise a query and connect directly with our team.</p>
-          <a className="button-primary" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
-            Help Center
-          </a>
-        </section>
-      </main>
+      <HomeBody />
 
       <footer className="site-footer">
         <div className="site-footer-inner">
