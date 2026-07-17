@@ -41,17 +41,19 @@ export function SupportPage() {
         </div>
       </header>
 
-      <section className="hero">
-        <h1>Welcome to the Fabric Community</h1>
-        <p>Learn, build, and collaborate with the global Fabric ecosystem.</p>
-      </section>
-
       <main className="landing">
-        <section className="ai-chat-hero">
-          <div className="ai-chat-hero-inner">
-            <ChatEntry placeholder="Ask Node about DeDi, CATALG, ONIX, or anything Fabric…" />
-          </div>
-        </section>
+        <div className="world-map-region">
+          <section className="hero">
+            <h1>Welcome to the Fabric Community</h1>
+            <p>Learn, build, and collaborate with the global Fabric ecosystem.</p>
+          </section>
+
+          <section className="ai-chat-hero">
+            <div className="ai-chat-hero-inner">
+              <ChatEntry placeholder="Ask Node about DeDi, CATALG, ONIX, or anything Fabric…" />
+            </div>
+          </section>
+        </div>
 
         <CommunityTiles />
 

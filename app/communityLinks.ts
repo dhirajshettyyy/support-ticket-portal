@@ -10,8 +10,10 @@ export const SOCIAL_LINKS = {
   github: "https://github.com/Networks-for-Humanity",
 };
 
+export type TileIconKey = "book" | "chat" | "link" | "handshake";
+
 export interface CommunityTile {
-  icon: string;
+  iconKey: TileIconKey;
   title: string;
   description: string;
   href: string;
@@ -20,28 +22,28 @@ export interface CommunityTile {
 
 export const COMMUNITY_TILES: CommunityTile[] = [
   {
-    icon: "\u{1F4DA}",
+    iconKey: "book",
     title: "Learn",
     description: "Explore comprehensive documentation on DeDi Registry, CATALG, ONIX, and the full Fabric stack.",
     href: DOCS_URL,
     buttonText: "Explore Docs",
   },
   {
-    icon: "\u{1F4AC}",
+    iconKey: "chat",
     title: "Interact",
     description: "Join our Discord community. Ask questions, share insights, and connect with other builders.",
     href: SOCIAL_LINKS.discord,
     buttonText: "Join Discord",
   },
   {
-    icon: "\u{1F517}",
+    iconKey: "link",
     title: "Connect",
     description: "Meet the global Fabric community on LinkedIn. Stay updated, network, and collaborate.",
     href: SOCIAL_LINKS.linkedin,
     buttonText: "Follow on LinkedIn",
   },
   {
-    icon: "\u{1F91D}",
+    iconKey: "handshake",
     title: "Contribute",
     description: "Help shape Fabric. Contribute to open-source, share ideas, and build with us.",
     href: SOCIAL_LINKS.github,
@@ -49,16 +51,3 @@ export const COMMUNITY_TILES: CommunityTile[] = [
   },
 ];
 
-export interface HelpArticle {
-  title: string;
-  href: string;
-}
-
-// Real, verified pages from docs.nfh.global — not placeholders.
-export const TOP_HELP_ARTICLES: HelpArticle[] = [
-  { title: "Getting started with Fabric", href: `${DOCS_URL}/build/getting-started-with-fabric` },
-  { title: "REGISTR — build trusted networks", href: `${DOCS_URL}/product-documentation/products/registr` },
-  { title: "CATALG — publish catalogs", href: `${DOCS_URL}/product-documentation/products/catalg` },
-  { title: "DISCOVR — find catalogs", href: `${DOCS_URL}/product-documentation/products/discovr` },
-  { title: "ONIX — connect to everything", href: `${DOCS_URL}/product-documentation/products/onix` },
-];
