@@ -506,7 +506,7 @@ textarea:focus {
 
 .ai-chat-hero {
   position: relative;
-  padding: 1.75rem 2rem;
+  padding: 1.75rem 2rem 1.25rem;
 }
 
 .ai-chat-hero-inner {
@@ -524,7 +524,7 @@ textarea:focus {
 }
 
 .chat-entry {
-  margin: 0 0 1.25rem;
+  margin: 0 0 2.5rem;
 }
 
 .chat-compact {
@@ -617,7 +617,7 @@ textarea:focus {
 .community-tiles {
   position: relative;
   z-index: 1;
-  padding: 2rem 2rem 3rem;
+  padding: 1.25rem 2rem 3rem;
 }
 
 .community-tiles-grid {
@@ -761,28 +761,35 @@ textarea:focus {
   background: var(--accent-hover);
 }
 
-.help-center-browse-all {
+.chat-help-inline {
   display: flex;
   align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  max-width: 260px;
-  margin: 0 auto;
-  border: 2px solid var(--accent);
-  border-radius: 4px;
-  background: var(--accent);
-  color: var(--accent-contrast);
-  font-size: 0.875rem;
-  font-weight: 700;
-  padding: 0.625rem 1.5rem;
-  text-decoration: none;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  flex-wrap: wrap;
+  gap: 0.5rem;
 }
 
-.help-center-browse-all:hover,
-.help-center-browse-all:focus-visible {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
+.chat-help-inline p {
+  margin: 0;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.chat-help-cta {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 6px;
+  background: #1f1f1f;
+  color: #ffffff;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.chat-help-cta:hover,
+.chat-help-cta:focus-visible {
+  background: #333333;
 }
 
 .site-footer {

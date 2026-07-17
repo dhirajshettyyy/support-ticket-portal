@@ -49,9 +49,12 @@ export function SupportPage() {
         <section className="ai-chat-hero">
           <div className="ai-chat-hero-inner">
             <ChatEntry placeholder="Ask Node anything about NFH Fabric" />
-            <a className="help-center-browse-all" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
-              Get Help
-            </a>
+            <div className="chat-help-inline">
+              <p>Still can&apos;t find an answer?</p>
+              <a className="chat-help-cta" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
+                Get Help →
+              </a>
+            </div>
           </div>
         </section>
 
