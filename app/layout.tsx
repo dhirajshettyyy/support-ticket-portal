@@ -17,8 +17,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={spaceGrotesk.variable}>
       <head>
-        {/* NFH's Adobe Typekit heading font ("tenon") — used site-wide on networksforhumanity.org */}
-        <link rel="stylesheet" href="https://use.typekit.net/zrd6ncw.css" />
         {/* Sets data-theme before first paint so there's no flash of the
             wrong theme — reads the user's saved choice, falling back to
             OS preference. Mirrors globals.css's :root[data-theme] rules. */}

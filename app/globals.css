@@ -4,7 +4,7 @@
   --surface-alt: #f8f8f8;
   --border: #e0e0e0;
   --text: #1f1f1f;
-  --text-muted: #5a5a5a;
+  --text-muted: #1f1f1f;
   --body-copy: #1f1f1f;
   --accent: #1f1f1f;
   --accent-hover: #3a3a3a;
@@ -38,8 +38,8 @@
     --surface-alt: #1a1a1a;
     --border: #333333;
     --text: #ffffff;
-    --text-muted: #a3a3a3;
-    --body-copy: #e0e0e0;
+    --text-muted: #ffffff;
+    --body-copy: #ffffff;
     --accent: #ffffff;
     --accent-hover: #d4d4d4;
     --accent-soft: #1a1a1a;
@@ -64,8 +64,8 @@
   --surface-alt: #1a1a1a;
   --border: #333333;
   --text: #ffffff;
-  --text-muted: #a3a3a3;
-  --body-copy: #e0e0e0;
+  --text-muted: #ffffff;
+  --body-copy: #ffffff;
   --accent: #ffffff;
   --accent-hover: #d4d4d4;
   --accent-soft: #1a1a1a;
@@ -89,7 +89,7 @@
   --surface-alt: #f8f8f8;
   --border: #e0e0e0;
   --text: #1f1f1f;
-  --text-muted: #5a5a5a;
+  --text-muted: #1f1f1f;
   --body-copy: #1f1f1f;
   --accent: #1f1f1f;
   --accent-hover: #3a3a3a;
@@ -141,21 +141,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Headings use NFH's Typekit display face ("tenon"), matching
-   networksforhumanity.org's --e-global-typography-primary settings
-   (64px / weight 600). Falls back to the body face if the Typekit
-   kit isn't authorized for this domain. */
 h1 {
-  font-family: "tenon", var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: clamp(2.25rem, 5vw, 4rem);
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
   font-weight: 600;
   line-height: 1.2;
   text-wrap: balance;
 }
 
 h2 {
-  font-family: "tenon", var(--font-space-grotesk), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-size: clamp(1.5rem, 3vw, 2.125rem);
   font-weight: 600;
   text-wrap: balance;
 }
@@ -195,7 +189,6 @@ body {
   line-height: 1.2;
   letter-spacing: 0.02em;
   color: var(--header-text);
-  opacity: 0.7;
 }
 
 .site-nav-right {
@@ -218,13 +211,12 @@ body {
   width: 24px;
   height: 24px;
   color: var(--header-text);
-  opacity: 0.85;
-  transition: opacity 0.2s ease;
+  transition: transform 0.2s ease;
 }
 
 .site-nav-socials a:hover,
 .site-nav-socials a:focus-visible {
-  opacity: 1;
+  transform: scale(1.1);
 }
 
 .site-nav-socials svg {
@@ -243,14 +235,12 @@ body {
   border-radius: 999px;
   background: transparent;
   color: var(--header-text);
-  opacity: 0.85;
   cursor: pointer;
-  transition: opacity 0.2s ease, background 0.2s ease;
+  transition: background 0.2s ease;
 }
 
 .theme-toggle:hover,
 .theme-toggle:focus-visible {
-  opacity: 1;
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -526,7 +516,7 @@ textarea:focus {
 
 .hero {
   position: relative;
-  padding: 5rem 2rem;
+  padding: 3.5rem 2rem;
   text-align: center;
 }
 
@@ -551,7 +541,7 @@ textarea:focus {
 
 .ai-chat-hero {
   position: relative;
-  padding: 3.5rem 2rem;
+  padding: 2.5rem 2rem;
 }
 
 .ai-chat-hero-inner {
@@ -564,12 +554,12 @@ textarea:focus {
 
 @media (max-width: 640px) {
   .ai-chat-hero {
-    padding: 3rem 1rem;
+    padding: 2rem 1rem;
   }
 }
 
 .chat-entry {
-  margin: 1rem 0 3rem;
+  margin: 0.75rem 0 1.5rem;
 }
 
 .chat-compact {
@@ -662,7 +652,7 @@ textarea:focus {
 .community-tiles {
   position: relative;
   z-index: 1;
-  padding: 4.5rem 2rem;
+  padding: 3rem 2rem;
 }
 
 .community-tiles-grid {
@@ -710,7 +700,6 @@ textarea:focus {
 }
 
 .community-tile h3 {
-  font-family: var(--font-space-grotesk), sans-serif;
   font-size: 1.25rem;
   font-weight: 700;
   margin: 0 0 0.6rem;
@@ -750,7 +739,7 @@ textarea:focus {
 
 @media (max-width: 640px) {
   .community-tiles {
-    padding: 4rem 1.25rem;
+    padding: 2.5rem 1.25rem;
   }
 
   .community-tiles-grid {
@@ -765,7 +754,7 @@ textarea:focus {
 .docs-section {
   max-width: 720px;
   margin: 0 auto;
-  padding: 3rem 1.5rem;
+  padding: 2rem 1.5rem;
 }
 
 .docs-section-intro {
@@ -855,7 +844,7 @@ textarea:focus {
 .help-center-section {
   max-width: 640px;
   margin: 0 auto;
-  padding: 4.5rem 2rem;
+  padding: 3rem 2rem;
   text-align: center;
 }
 
@@ -896,14 +885,14 @@ textarea:focus {
 
 @media (max-width: 560px) {
   .help-center-section {
-    padding: 4rem 1.25rem;
+    padding: 2.5rem 1.25rem;
   }
 }
 
 .site-footer {
   background: var(--header-bg);
   color: var(--header-text);
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 
 .site-footer-inner {
@@ -930,13 +919,13 @@ textarea:focus {
   font-size: 1.125rem;
   font-weight: 600;
   margin: 0 0 0.25rem;
-  color: #8c8c8c;
+  color: #ffffff;
 }
 
 .footer-address p {
   font-size: 1.125rem;
   font-weight: 400;
-  color: #8c8c8c;
+  color: #ffffff;
   margin: 0;
   line-height: 1.5;
 }
@@ -955,12 +944,12 @@ textarea:focus {
 }
 
 .footer-links a:hover {
-  color: #8c8c8c;
+  text-decoration: underline;
 }
 
 .footer-contact p {
   font-size: 0.875rem;
-  color: #8c8c8c;
+  color: #ffffff;
   margin: 0 0 0.25rem;
 }
 
@@ -1008,7 +997,7 @@ textarea:focus {
   font-weight: 600;
   line-height: 1.1;
   letter-spacing: 0.03em;
-  color: #a3a3a3;
+  color: #ffffff;
 }
 
 .site-footer-bottom p {
