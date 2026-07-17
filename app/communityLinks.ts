@@ -2,7 +2,7 @@
 
 export const SITE_URL = "https://networksforhumanity.org";
 export const DOCS_URL = "https://docs.nfh.global";
-export const HELP_CENTER_URL = "https://fabric.support.site/";
+export const HELP_CENTER_URL = "https://support.nfh.global/";
 
 export const SOCIAL_LINKS = {
   discord: "https://discord.com/invite/pbayfsrMR9?utm_source=website&utm_medium=BOCCTAButton&utm_campaign=BecknProtocol",
