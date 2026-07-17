@@ -45,9 +45,9 @@ export const COMMUNITY_TILES: CommunityTile[] = [
   {
     iconKey: "handshake",
     title: "Contribute",
-    description: "Help shape Fabric. Contribute to open-source, share ideas, and build with us.",
+    description: "Help shape Fabric. Contribute, share ideas, and build with us.",
     href: SOCIAL_LINKS.github,
-    buttonText: "View on GitHub",
+    buttonText: "Visit GitHub",
   },
 ];
 

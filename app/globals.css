@@ -497,21 +497,18 @@ textarea:focus {
   -webkit-mask-image: url("/world-map-mask.svg");
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
-  -webkit-mask-size: contain;
+  /* "cover" fills the sticky box edge-to-edge at any viewport aspect
+     ratio (cropping the map's far left/right ocean edges slightly),
+     which is what actually removes the blank letterbox band that
+     "contain" leaves above/below the map inside the box - that band
+     was the solid gap showing up right under the header and right
+     above the footer. */
+  -webkit-mask-size: cover;
   mask-image: url("/world-map-mask.svg");
   mask-repeat: no-repeat;
   mask-position: center;
-  mask-size: contain;
+  mask-size: cover;
   opacity: var(--map-opacity);
-}
-
-@media (max-width: 640px) {
-  .map-sticky-layer {
-    /* On tall/narrow phone viewports "contain" would shrink the map
-       to a small centered island; fill the width instead. */
-    -webkit-mask-size: 160% auto;
-    mask-size: 160% auto;
-  }
 }
 
 .hero {
@@ -724,7 +721,6 @@ textarea:focus {
   color: var(--text);
   font-size: 0.875rem;
   font-weight: 700;
-  text-transform: capitalize;
   letter-spacing: 0.01em;
   padding: 0.625rem 1.25rem;
   text-decoration: none;
@@ -751,54 +747,6 @@ textarea:focus {
   }
 }
 
-.docs-section {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
-.docs-section-intro {
-  color: var(--text-muted);
-  font-size: 0.9375rem;
-  margin: 0 0 1.5rem;
-  text-align: center;
-}
-
-.docs-section-intro a {
-  color: var(--text);
-  text-decoration: underline;
-}
-
-.fabric-links {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 0.75rem;
-}
-
-.fabric-link {
-  display: block;
-  text-align: center;
-  padding: 1.125rem 0.75rem;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text);
-  font-size: 0.875rem;
-  font-weight: 600;
-  text-decoration: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
-}
-
-.fabric-link:hover {
-  border-color: var(--text-muted);
-  background: var(--accent-soft);
-}
-
-@media (max-width: 560px) {
-  .fabric-links {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
 
 .help-section {
   max-width: 720px;
@@ -896,55 +844,10 @@ textarea:focus {
 }
 
 .site-footer-inner {
-  max-width: 1040px;
+  max-width: 640px;
   margin: 0 auto;
   padding: 3.5rem 1.5rem 2.5rem;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr 1fr;
-  gap: 2.5rem;
-}
-
-.footer-col h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: #ffffff;
-  margin: 0 0 1.25rem;
-}
-
-.footer-address {
-  margin-bottom: 1.25rem;
-}
-
-.footer-address h4 {
-  font-size: 1.125rem;
-  font-weight: 600;
-  margin: 0 0 0.25rem;
-  color: #ffffff;
-}
-
-.footer-address p {
-  font-size: 1.125rem;
-  font-weight: 400;
-  color: #ffffff;
-  margin: 0;
-  line-height: 1.5;
-}
-
-.footer-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.footer-links a {
-  color: #ffffff;
-  text-decoration: none;
-  font-size: 0.9375rem;
-  font-weight: 400;
-}
-
-.footer-links a:hover {
-  text-decoration: underline;
+  text-align: center;
 }
 
 .footer-contact p {
@@ -1008,11 +911,6 @@ textarea:focus {
 }
 
 @media (max-width: 720px) {
-  .site-footer-inner {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-
   .footer-contact-cta {
     font-size: 2rem !important;
   }
