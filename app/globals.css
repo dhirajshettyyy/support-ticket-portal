@@ -662,7 +662,6 @@ textarea:focus {
 .community-tiles {
   position: relative;
   z-index: 1;
-  background: var(--bg);
   padding: 4.5rem 2rem;
 }
 
