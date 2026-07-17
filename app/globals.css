@@ -667,6 +667,8 @@ textarea:focus {
 }
 
 .community-tile {
+  display: flex;
+  flex-direction: column;
   background: var(--tile-bg);
   border: 1px solid var(--tile-border);
   border-radius: 8px;
@@ -713,6 +715,8 @@ textarea:focus {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: center;
+  margin-top: auto;
   min-height: 44px;
   appearance: none;
   border: 1px solid var(--accent);
@@ -790,10 +794,18 @@ textarea:focus {
 }
 
 .help-center-section {
-  max-width: 640px;
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
   margin: 0 auto;
   padding: 3rem 2rem;
   text-align: center;
+  background: var(--bg);
+}
+
+.help-center-section-inner {
+  max-width: 640px;
+  margin: 0 auto;
 }
 
 .help-center-section h2 {
@@ -814,21 +826,21 @@ textarea:focus {
   min-height: 44px;
   max-width: 260px;
   margin: 0 auto;
-  border: 2px solid var(--text);
+  border: 2px solid var(--accent);
   border-radius: 4px;
-  background: transparent;
-  color: var(--text);
+  background: var(--accent);
+  color: var(--accent-contrast);
   font-size: 0.875rem;
   font-weight: 700;
   padding: 0.625rem 1.5rem;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .help-center-browse-all:hover,
 .help-center-browse-all:focus-visible {
-  background: var(--text);
-  color: var(--bg);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
 }
 
 @media (max-width: 560px) {
