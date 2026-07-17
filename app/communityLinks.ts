@@ -28,7 +28,7 @@ export const COMMUNITY_TILES: CommunityTile[] = [
   {
     iconKey: "book",
     title: "Learn",
-    description: "Explore comprehensive documentation on DeDi Registry, CATALG, ONIX, and the full Fabric stack.",
+    description: "Explore comprehensive documentation on the full Fabric stack.",
     href: DOCS_URL,
     buttonText: "Explore Docs",
   },

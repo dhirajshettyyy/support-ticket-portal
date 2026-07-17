@@ -761,31 +761,6 @@ textarea:focus {
   background: var(--accent-hover);
 }
 
-.help-center-section {
-  /* Needs to be a positioned element (not necessarily z-index'd) so it
-     paints in the same stacking step as the position: sticky map
-     layer, ordered after it by DOM position. Without this, a
-     non-positioned element paints *before* any positioned sibling
-     regardless of DOM order - which is what let the map dots show
-     through the "solid" Raise a Ticket button underneath it. */
-  position: relative;
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
-  text-align: center;
-}
-
-.help-center-section h2 {
-  text-align: center;
-  margin: 0 0 0.75rem;
-}
-
-.help-center-subtitle {
-  text-align: center;
-  color: var(--body-copy);
-  margin: 0 0 2rem;
-}
-
 .help-center-browse-all {
   display: flex;
   align-items: center;
@@ -808,12 +783,6 @@ textarea:focus {
 .help-center-browse-all:focus-visible {
   background: var(--accent-hover);
   border-color: var(--accent-hover);
-}
-
-@media (max-width: 560px) {
-  .help-center-section {
-    padding: 2.5rem 1.25rem 1.5rem;
-  }
 }
 
 .site-footer {

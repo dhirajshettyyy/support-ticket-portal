@@ -3,7 +3,6 @@
 
 import { ChatEntry } from "./ChatEntry";
 import { CommunityTiles } from "./CommunityTiles";
-import { HelpCenterSection } from "./HelpCenterSection";
 import { DiscordIcon, GitHubIcon, LinkedInIcon } from "./SocialIcons";
 import { ThemeToggle } from "./ThemeToggle";
 import { HELP_CENTER_URL, SITE_URL, SOCIAL_LINKS } from "./communityLinks";
@@ -57,8 +56,6 @@ export function SupportPage() {
         </section>
 
         <CommunityTiles />
-
-        <HelpCenterSection />
       </main>
 
       <footer className="site-footer">
