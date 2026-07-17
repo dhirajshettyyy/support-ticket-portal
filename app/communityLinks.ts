@@ -42,14 +42,14 @@ export const COMMUNITY_TILES: CommunityTile[] = [
   {
     iconKey: "link",
     title: "Connect",
-    description: "Meet the global Fabric community on LinkedIn. Stay updated, network, and collaborate.",
+    description: "Meet the global community on LinkedIn. Stay updated, network, and collaborate.",
     href: SOCIAL_LINKS.linkedin,
     buttonText: "Follow on LinkedIn",
   },
   {
     iconKey: "handshake",
     title: "Contribute",
-    description: "Help shape Fabric. Contribute, share ideas, and build with us.",
+    description: "Help shape NFH Fabric. Contribute, share ideas, and build with us.",
     href: CONTRIBUTE_URL,
     buttonText: "Join Discussions",
   },
