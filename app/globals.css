@@ -484,30 +484,44 @@ textarea:focus {
 }
 
 .landing {
+  position: relative;
+  /* Clips the sticky map layer to exactly this element's box, so it
+     naturally un-sticks and scrolls away the instant this ends —
+     right where <footer> begins, with no JS/scroll-listener needed. */
+  overflow: clip;
   background: var(--bg);
 }
 
-.world-map-region {
-  position: relative;
-  background-color: var(--hero-bg);
-  overflow: hidden;
-}
-
-.world-map-region::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+.map-sticky-layer {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+  /* Cancels the layout space the sticky box would otherwise reserve,
+     so it doesn't push the hero section down by a full viewport. */
+  margin-bottom: -100vh;
+  margin-bottom: -100dvh;
   z-index: 0;
+  pointer-events: none;
   background-color: var(--dot);
   -webkit-mask-image: url("/world-map-mask.svg");
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-position: center;
-  -webkit-mask-size: 100% auto;
+  -webkit-mask-size: contain;
   mask-image: url("/world-map-mask.svg");
   mask-repeat: no-repeat;
   mask-position: center;
-  mask-size: 100% auto;
+  mask-size: contain;
   opacity: var(--map-opacity);
+}
+
+@media (max-width: 640px) {
+  .map-sticky-layer {
+    /* On tall/narrow phone viewports "contain" would shrink the map
+       to a small centered island; fill the width instead. */
+    -webkit-mask-size: 160% auto;
+    mask-size: 160% auto;
+  }
 }
 
 .hero {
@@ -646,6 +660,8 @@ textarea:focus {
 }
 
 .community-tiles {
+  position: relative;
+  z-index: 1;
   background: var(--bg);
   padding: 4.5rem 2rem;
 }
