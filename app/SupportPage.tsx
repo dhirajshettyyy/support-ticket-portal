@@ -2,11 +2,11 @@
 "use client";
 
 import { ChatEntry } from "./ChatEntry";
+import { CommunityTiles } from "./CommunityTiles";
+import { HelpCenterSection } from "./HelpCenterSection";
+import { DiscordIcon, GitHubIcon, LinkedInIcon } from "./SocialIcons";
 import { FABRIC_COMPONENT_LINKS } from "./fabricComponents";
-
-const DOCS_URL = "https://docs.nfh.global";
-const SITE_URL = "https://networksforhumanity.org";
-const HELP_CENTER_URL = "https://fabric.support.site/";
+import { DOCS_URL, HELP_CENTER_URL, SITE_URL, SOCIAL_LINKS } from "./communityLinks";
 
 export function SupportPage() {
   return (
@@ -22,19 +22,42 @@ export function SupportPage() {
             HUMANITY
           </span>
         </a>
+
+        <div className="site-nav-right">
+          <nav className="site-nav-socials" aria-label="Social links">
+            <a href={SOCIAL_LINKS.discord} target="_blank" rel="noopener noreferrer" aria-label="Discord">
+              <DiscordIcon />
+            </a>
+            <a href={SOCIAL_LINKS.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <LinkedInIcon />
+            </a>
+            <a href={SOCIAL_LINKS.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <GitHubIcon />
+            </a>
+          </nav>
+          <a className="nav-support-cta" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
+            Go to Support
+          </a>
+        </div>
       </header>
 
       <section className="hero">
-        <h1>Welcome to NFH Support</h1>
-        <p>Find what you need faster. Explore our technical documentation or enter your question below to search with AI.</p>
+        <h1>Welcome to the Fabric Community</h1>
+        <p>Learn, build, and collaborate with the global Fabric ecosystem.</p>
       </section>
 
       <main className="landing">
-        <ChatEntry />
+        <section className="ai-chat-hero">
+          <div className="ai-chat-hero-inner">
+            <ChatEntry placeholder="Ask Node about DeDi, CATALG, ONIX, or anything Fabric…" />
+          </div>
+        </section>
+
+        <CommunityTiles />
 
         <section className="docs-section">
           <p className="docs-section-intro">
-            Explore documentation for each core component of the NFH Fabric, or browse the{" "}
+            Or jump straight to documentation for a specific core component of the NFH Fabric, or browse the{" "}
             <a href={DOCS_URL} target="_blank" rel="noopener noreferrer">
               full documentation
             </a>
@@ -55,13 +78,7 @@ export function SupportPage() {
           </div>
         </section>
 
-        <section className="help-section">
-          <h2>Still have questions?</h2>
-          <p>Raise a query and connect directly with our team.</p>
-          <a className="button-primary" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
-            Help Center
-          </a>
-        </section>
+        <HelpCenterSection />
       </main>
 
       <footer className="site-footer">
