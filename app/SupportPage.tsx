@@ -5,6 +5,7 @@ import { ChatEntry } from "./ChatEntry";
 import { CommunityTiles } from "./CommunityTiles";
 import { HelpCenterSection } from "./HelpCenterSection";
 import { DiscordIcon, GitHubIcon, LinkedInIcon } from "./SocialIcons";
+import { ThemeToggle } from "./ThemeToggle";
 import { FABRIC_COMPONENT_LINKS } from "./fabricComponents";
 import { DOCS_URL, HELP_CENTER_URL, SITE_URL, SOCIAL_LINKS } from "./communityLinks";
 
@@ -35,6 +36,7 @@ export function SupportPage() {
               <GitHubIcon />
             </a>
           </nav>
+          <ThemeToggle />
           <a className="nav-support-cta" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
             Go to Support
           </a>

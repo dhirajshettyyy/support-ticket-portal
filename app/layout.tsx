@@ -19,6 +19,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         {/* NFH's Adobe Typekit heading font ("tenon") — used site-wide on networksforhumanity.org */}
         <link rel="stylesheet" href="https://use.typekit.net/zrd6ncw.css" />
+        {/* Sets data-theme before first paint so there's no flash of the
+            wrong theme — reads the user's saved choice, falling back to
+            OS preference. Mirrors globals.css's :root[data-theme] rules. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var s=localStorage.getItem('theme');var t=(s==='light'||s==='dark')?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`,
+          }}
+        />
       </head>
       <body>{children}</body>
     </html>

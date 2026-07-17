@@ -27,31 +27,89 @@
   --map-opacity: 0.4;
 }
 
+/* Dark tokens apply either by OS preference (when the user hasn't made
+   an explicit choice) or by explicit override via the theme toggle,
+   which stamps data-theme on <html> and persists it to localStorage —
+   see ThemeToggle.tsx and the inline anti-flash script in layout.tsx. */
 @media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #0a0a0a;
-    --surface: #0a0a0a;
-    --surface-alt: #161616;
-    --border: #2a2a2a;
+  :root:not([data-theme]) {
+    --bg: #121212;
+    --surface: #121212;
+    --surface-alt: #1a1a1a;
+    --border: #333333;
     --text: #ffffff;
     --text-muted: #a3a3a3;
     --body-copy: #e0e0e0;
     --accent: #ffffff;
     --accent-hover: #d4d4d4;
     --accent-soft: #1a1a1a;
-    --accent-contrast: #0a0a0a;
+    --accent-contrast: #121212;
     --danger: #ff6b5e;
     --danger-soft: #241111;
     --success: #ffffff;
     --success-soft: #1a1a1a;
-    --hero-bg: #0a0a0a;
-    --tile-bg: #2a2a2a;
-    --tile-border: #444444;
+    --hero-bg: #121212;
+    --tile-bg: #1f1f1f;
+    --tile-border: #333333;
     --tile-shadow: none;
     --shadow: none;
-    --dot: #8a8a8a;
-    --map-opacity: 0.45;
+    --dot: #707070;
+    --map-opacity: 0.4;
   }
+}
+
+:root[data-theme="dark"] {
+  --bg: #121212;
+  --surface: #121212;
+  --surface-alt: #1a1a1a;
+  --border: #333333;
+  --text: #ffffff;
+  --text-muted: #a3a3a3;
+  --body-copy: #e0e0e0;
+  --accent: #ffffff;
+  --accent-hover: #d4d4d4;
+  --accent-soft: #1a1a1a;
+  --accent-contrast: #121212;
+  --danger: #ff6b5e;
+  --danger-soft: #241111;
+  --success: #ffffff;
+  --success-soft: #1a1a1a;
+  --hero-bg: #121212;
+  --tile-bg: #1f1f1f;
+  --tile-border: #333333;
+  --tile-shadow: none;
+  --shadow: none;
+  --dot: #707070;
+  --map-opacity: 0.4;
+}
+
+:root[data-theme="light"] {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-alt: #f8f8f8;
+  --border: #e0e0e0;
+  --text: #1f1f1f;
+  --text-muted: #5a5a5a;
+  --body-copy: #1f1f1f;
+  --accent: #1f1f1f;
+  --accent-hover: #3a3a3a;
+  --accent-soft: #f2f2f2;
+  --accent-contrast: #ffffff;
+  --danger: #c0392b;
+  --danger-soft: #fdf0ef;
+  --success: #1f1f1f;
+  --success-soft: #f2f2f2;
+  --hero-bg: #ffffff;
+  --tile-bg: #f8f8f8;
+  --tile-border: #e0e0e0;
+  --tile-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --shadow: none;
+  --dot: #b0b0b0;
+  --map-opacity: 0.4;
+}
+
+body {
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .visually-hidden {
@@ -161,7 +219,7 @@ body {
   height: 24px;
   color: var(--header-text);
   opacity: 0.85;
-  transition: opacity 0.15s ease;
+  transition: opacity 0.2s ease;
 }
 
 .site-nav-socials a:hover,
@@ -172,6 +230,33 @@ body {
 .site-nav-socials svg {
   width: 20px;
   height: 20px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  appearance: none;
+  border: 1px solid var(--header-text);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--header-text);
+  opacity: 0.85;
+  cursor: pointer;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+
+.theme-toggle:hover,
+.theme-toggle:focus-visible {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.theme-toggle svg {
+  width: 18px;
+  height: 18px;
 }
 
 .nav-support-cta {
@@ -190,7 +275,7 @@ body {
   letter-spacing: 0.03em;
   padding: 0.625rem 1.25rem;
   text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .nav-support-cta:hover,
@@ -284,7 +369,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: 4px;
   padding: 0.625rem 0.75rem;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 textarea {
@@ -318,7 +403,7 @@ textarea:focus {
   letter-spacing: 0.03em;
   padding: 0.8125rem 1rem;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: background 0.2s ease;
 }
 
 .submit:hover:not(:disabled) {
@@ -391,7 +476,7 @@ textarea:focus {
   letter-spacing: 0.03em;
   padding: 0.6875rem 1rem;
   cursor: pointer;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .ghost-button:hover {
@@ -489,7 +574,7 @@ textarea:focus {
   color: var(--text-muted);
   cursor: pointer;
   text-align: left;
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 .chat-compact:hover {
@@ -586,7 +671,7 @@ textarea:focus {
   box-shadow: var(--tile-shadow);
   padding: 1.75rem 1.5rem;
   text-align: center;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .community-tile:hover {
@@ -639,7 +724,7 @@ textarea:focus {
   letter-spacing: 0.01em;
   padding: 0.625rem 1.25rem;
   text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .community-tile-link:hover,
@@ -697,7 +782,7 @@ textarea:focus {
   font-size: 0.875rem;
   font-weight: 600;
   text-decoration: none;
-  transition: border-color 0.15s ease, background 0.15s ease;
+  transition: border-color 0.2s ease, background 0.2s ease;
 }
 
 .fabric-link:hover {
@@ -745,7 +830,7 @@ textarea:focus {
   padding: 0.8125rem 1.75rem;
   cursor: pointer;
   text-decoration: none;
-  transition: background 0.15s ease;
+  transition: background 0.2s ease;
 }
 
 .button-primary:hover {
@@ -785,7 +870,7 @@ textarea:focus {
   font-weight: 700;
   padding: 0.625rem 1.5rem;
   text-decoration: none;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .help-center-browse-all:hover,
