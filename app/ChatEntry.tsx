@@ -5,8 +5,9 @@ import { useState } from "react";
 import { PlainChatWidget } from "./PlainChatWidget";
 
 const CHAT_EMBED_SELECTOR = "#plain-chat-embed";
+const DEFAULT_PLACEHOLDER = "Hey, how can I help you?";
 
-export function ChatEntry() {
+export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?: string }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -22,7 +23,7 @@ export function ChatEntry() {
               strokeLinejoin="round"
             />
           </svg>
-          Hey, how can I help you?
+          {placeholder}
         </button>
       )}
       <div className={isExpanded ? "chat-embed-shell chat-embed-shell-expanded" : "chat-embed-shell"}>

@@ -8,11 +8,15 @@ const csp = [
   "frame-src 'none'",
   "frame-ancestors 'none'",
   "base-uri 'self'",
-  "form-action 'self'",
+  // 'self' for the archived ticket form's own API route, plus
+  // fabric.support.site for the Help Center search box, which submits
+  // there directly (opens in a new tab) rather than through a proxy.
+  "form-action 'self' https://fabric.support.site",
 ].join("; ");
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  outputFileTracingRoot: import.meta.dirname,
   poweredByHeader: false,
   async headers() {
     return [
