@@ -36,9 +36,6 @@ export function SupportPage() {
             </a>
           </nav>
           <ThemeToggle />
-          <a className="nav-support-cta" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
-            Get Help
-          </a>
         </div>
       </header>
 
@@ -52,7 +49,10 @@ export function SupportPage() {
 
         <section className="ai-chat-hero">
           <div className="ai-chat-hero-inner">
-            <ChatEntry placeholder="Ask Node about DeDi, CATALG, ONIX, or anything Fabric…" />
+            <ChatEntry placeholder="Ask Node anything about NFH Fabric" />
+            <a className="help-center-browse-all" href={HELP_CENTER_URL} target="_blank" rel="noopener noreferrer">
+              Get Help
+            </a>
           </div>
         </section>
 

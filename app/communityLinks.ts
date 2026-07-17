@@ -10,6 +10,10 @@ export const SOCIAL_LINKS = {
   github: "https://github.com/Networks-for-Humanity/fabric-support",
 };
 
+// Distinct from SOCIAL_LINKS.github (used by the header icon) - the
+// Contribute tile points at Discussions specifically.
+export const CONTRIBUTE_URL = "https://github.com/Networks-for-Humanity/fabric-support/discussions";
+
 export type TileIconKey = "book" | "chat" | "link" | "handshake";
 
 export interface CommunityTile {
@@ -46,8 +50,8 @@ export const COMMUNITY_TILES: CommunityTile[] = [
     iconKey: "handshake",
     title: "Contribute",
     description: "Help shape Fabric. Contribute, share ideas, and build with us.",
-    href: SOCIAL_LINKS.github,
-    buttonText: "Visit GitHub",
+    href: CONTRIBUTE_URL,
+    buttonText: "Join Discussions",
   },
 ];
 

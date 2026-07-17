@@ -24,7 +24,7 @@
   --radius: 6px;
   --shadow: none;
   --dot: #b0b0b0;
-  --map-opacity: 0.4;
+  --map-opacity: 0.32;
 }
 
 /* Dark tokens apply either by OS preference (when the user hasn't made
@@ -54,7 +54,7 @@
     --tile-shadow: none;
     --shadow: none;
     --dot: #707070;
-    --map-opacity: 0.4;
+    --map-opacity: 0.35;
   }
 }
 
@@ -80,7 +80,7 @@
   --tile-shadow: none;
   --shadow: none;
   --dot: #707070;
-  --map-opacity: 0.4;
+  --map-opacity: 0.35;
 }
 
 :root[data-theme="light"] {
@@ -105,7 +105,7 @@
   --tile-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   --shadow: none;
   --dot: #b0b0b0;
-  --map-opacity: 0.4;
+  --map-opacity: 0.32;
 }
 
 body {
@@ -249,31 +249,6 @@ body {
   height: 18px;
 }
 
-.nav-support-cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  appearance: none;
-  border: 2px solid var(--header-text);
-  border-radius: 4px;
-  background: transparent;
-  color: var(--header-text);
-  font-size: 0.8125rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
-  padding: 0.625rem 1.25rem;
-  text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.nav-support-cta:hover,
-.nav-support-cta:focus-visible {
-  background: var(--header-text);
-  color: var(--header-bg);
-}
-
 a:focus-visible,
 button:focus-visible {
   outline: 2px solid var(--accent);
@@ -281,25 +256,12 @@ button:focus-visible {
 }
 
 @media (max-width: 640px) {
+  /* No Get Help button in the header anymore, so it's just logo left
+     + socials/theme right - the base .site-nav flex-wrap already
+     handles this comfortably on one row at 375px+ without any
+     column-stacking override needed. */
   .site-nav {
-    flex-direction: column;
-    align-items: flex-start;
-    row-gap: 0.75rem;
-  }
-
-  /* Was stacking socials, theme toggle, and Get Help into 4 separate
-     rows - the toggle in particular ended up floating alone with no
-     visual connection to anything. Wrapping instead of stacking keeps
-     the socials + toggle together as one row; Get Help (width: 100%)
-     naturally wraps to its own row below since nothing else fits
-     beside it. */
-  .site-nav-right {
-    width: 100%;
-    flex-wrap: wrap;
-  }
-
-  .nav-support-cta {
-    width: 100%;
+    padding: 1rem 1.25rem;
   }
 }
 
@@ -562,7 +524,7 @@ textarea:focus {
 }
 
 .chat-entry {
-  margin: 0;
+  margin: 0 0 1.25rem;
 }
 
 .chat-compact {
