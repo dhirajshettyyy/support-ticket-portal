@@ -1,14 +1,29 @@
 // app/ChatEntry.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { PlainChatWidget } from "./PlainChatWidget";
 
 const CHAT_EMBED_SELECTOR = "#plain-chat-embed";
 const DEFAULT_PLACEHOLDER = "Hey, how can I help you?";
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?: string }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [email, setEmail] = useState<string | null>(null);
+  const [emailInput, setEmailInput] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+
+  function handleEmailSubmit(event: FormEvent) {
+    event.preventDefault();
+    const trimmed = emailInput.trim();
+    if (!EMAIL_RE.test(trimmed)) {
+      setEmailError("Enter a valid email address.");
+      return;
+    }
+    setEmailError(null);
+    setEmail(trimmed);
+  }
 
   return (
     <section className="chat-entry">
@@ -45,12 +60,32 @@ export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?:
             </svg>
           </button>
         )}
+        {isExpanded && !email && (
+          <form className="chat-email-gate" onSubmit={handleEmailSubmit}>
+            <p>Enter your email to start chatting with Ari.</p>
+            <input
+              type="email"
+              className="chat-email-input"
+              placeholder="you@example.com"
+              value={emailInput}
+              onChange={(event) => setEmailInput(event.target.value)}
+              autoFocus
+              required
+            />
+            {emailError && <p className="chat-email-error">{emailError}</p>}
+            <button type="submit" className="chat-email-submit">
+              Start chat
+            </button>
+          </form>
+        )}
         <div
           id="plain-chat-embed"
-          className={isExpanded ? "chat-embed chat-embed-expanded" : "chat-embed chat-embed-collapsed"}
+          className={
+            isExpanded && email ? "chat-embed chat-embed-expanded" : "chat-embed chat-embed-collapsed"
+          }
         />
       </div>
-      <PlainChatWidget embedAt={CHAT_EMBED_SELECTOR} />
+      {isExpanded && email && <PlainChatWidget embedAt={CHAT_EMBED_SELECTOR} email={email} />}
     </section>
   );
 }

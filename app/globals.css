@@ -614,6 +614,63 @@ textarea:focus {
   overflow: hidden;
 }
 
+.chat-email-gate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.chat-email-gate p {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--text);
+}
+
+.chat-email-input {
+  width: 100%;
+  appearance: none;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  padding: 0.625rem 0.875rem;
+}
+
+.chat-email-input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.chat-email-error {
+  color: var(--danger);
+  font-size: 0.8125rem;
+}
+
+.chat-email-submit {
+  appearance: none;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--accent-contrast);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  padding: 0.625rem 1.25rem;
+  cursor: pointer;
+}
+
+.chat-email-submit:hover,
+.chat-email-submit:focus-visible {
+  background: var(--accent-hover);
+}
+
 .community-tiles {
   position: relative;
   z-index: 1;
