@@ -1,14 +1,31 @@
 // app/ChatEntry.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { PlainChatWidget } from "./PlainChatWidget";
 
 const CHAT_EMBED_SELECTOR = "#plain-chat-embed";
 const DEFAULT_PLACEHOLDER = "Hey, how can I help you?";
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?: string }) {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [email, setEmail] = useState<string | null>(null);
+  const [emailInput, setEmailInput] = useState("");
+  const [emailError, setEmailError] = useState<string | null>(null);
+  const [widgetError, setWidgetError] = useState<string | null>(null);
+
+  function handleEmailSubmit(event: FormEvent) {
+    event.preventDefault();
+    const trimmed = emailInput.trim();
+    if (!EMAIL_RE.test(trimmed)) {
+      setEmailError("Enter a valid email address.");
+      return;
+    }
+    setEmailError(null);
+    setWidgetError(null);
+    setEmail(trimmed);
+  }
 
   return (
     <section className="chat-entry">
@@ -45,12 +62,49 @@ export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?:
             </svg>
           </button>
         )}
+        {isExpanded && !email && (
+          <form className="chat-email-gate" onSubmit={handleEmailSubmit}>
+            <p>Enter your email to start chatting with Node.</p>
+            <input
+              type="email"
+              className="chat-email-input"
+              placeholder="you@example.com"
+              value={emailInput}
+              onChange={(event) => setEmailInput(event.target.value)}
+              autoFocus
+              required
+            />
+            {emailError && <p className="chat-email-error">{emailError}</p>}
+            <button type="submit" className="chat-email-submit">
+              Start chat
+            </button>
+          </form>
+        )}
+        {isExpanded && email && widgetError && (
+          <div className="chat-email-gate">
+            <p className="chat-email-error">{widgetError}</p>
+            <button
+              type="button"
+              className="chat-email-submit"
+              onClick={() => {
+                setWidgetError(null);
+                setEmail(null);
+              }}
+            >
+              Try again
+            </button>
+          </div>
+        )}
         <div
           id="plain-chat-embed"
-          className={isExpanded ? "chat-embed chat-embed-expanded" : "chat-embed chat-embed-collapsed"}
+          className={
+            isExpanded && email && !widgetError ? "chat-embed chat-embed-expanded" : "chat-embed chat-embed-collapsed"
+          }
         />
       </div>
-      <PlainChatWidget embedAt={CHAT_EMBED_SELECTOR} />
+      {isExpanded && email && !widgetError && (
+        <PlainChatWidget embedAt={CHAT_EMBED_SELECTOR} email={email} onError={setWidgetError} />
+      )}
     </section>
   );
 }

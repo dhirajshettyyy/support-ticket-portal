@@ -2,16 +2,22 @@
 
 export const SITE_URL = "https://networksforhumanity.org";
 export const DOCS_URL = "https://docs.nfh.global";
-export const HELP_CENTER_URL = "https://fabric.support.site/";
+export const HELP_CENTER_URL = "https://support.nfh.global/";
 
 export const SOCIAL_LINKS = {
-  discord: "https://discord.com/invite/beckn",
+  discord: "https://discord.com/invite/pbayfsrMR9?utm_source=website&utm_medium=BOCCTAButton&utm_campaign=BecknProtocol",
   linkedin: "https://www.linkedin.com/company/networks-for-humanity",
-  github: "https://github.com/Networks-for-Humanity",
+  github: "https://github.com/Networks-for-Humanity/fabric-support",
 };
 
+// Distinct from SOCIAL_LINKS.github (used by the header icon) - the
+// Contribute tile points at Discussions specifically.
+export const CONTRIBUTE_URL = "https://github.com/Networks-for-Humanity/fabric-support/discussions";
+
+export type TileIconKey = "book" | "chat" | "link" | "handshake";
+
 export interface CommunityTile {
-  icon: string;
+  iconKey: TileIconKey;
   title: string;
   description: string;
   href: string;
@@ -20,45 +26,32 @@ export interface CommunityTile {
 
 export const COMMUNITY_TILES: CommunityTile[] = [
   {
-    icon: "\u{1F4DA}",
+    iconKey: "book",
     title: "Learn",
-    description: "Explore comprehensive documentation on DeDi Registry, CATALG, ONIX, and the full Fabric stack.",
+    description: "Explore comprehensive documentation on the full Fabric stack.",
     href: DOCS_URL,
     buttonText: "Explore Docs",
   },
   {
-    icon: "\u{1F4AC}",
+    iconKey: "chat",
     title: "Interact",
     description: "Join our Discord community. Ask questions, share insights, and connect with other builders.",
     href: SOCIAL_LINKS.discord,
     buttonText: "Join Discord",
   },
   {
-    icon: "\u{1F517}",
+    iconKey: "link",
     title: "Connect",
-    description: "Meet the global Fabric community on LinkedIn. Stay updated, network, and collaborate.",
+    description: "Meet the global community on LinkedIn. Stay updated, network, and collaborate.",
     href: SOCIAL_LINKS.linkedin,
     buttonText: "Follow on LinkedIn",
   },
   {
-    icon: "\u{1F91D}",
+    iconKey: "handshake",
     title: "Contribute",
-    description: "Help shape Fabric. Contribute to open-source, share ideas, and build with us.",
-    href: SOCIAL_LINKS.github,
-    buttonText: "View on GitHub",
+    description: "Help shape NFH Fabric. Contribute, share ideas, and build with us.",
+    href: CONTRIBUTE_URL,
+    buttonText: "Join Discussions",
   },
 ];
 
-export interface HelpArticle {
-  title: string;
-  href: string;
-}
-
-// Real, verified pages from docs.nfh.global — not placeholders.
-export const TOP_HELP_ARTICLES: HelpArticle[] = [
-  { title: "Getting started with Fabric", href: `${DOCS_URL}/build/getting-started-with-fabric` },
-  { title: "REGISTR — build trusted networks", href: `${DOCS_URL}/product-documentation/products/registr` },
-  { title: "CATALG — publish catalogs", href: `${DOCS_URL}/product-documentation/products/catalg` },
-  { title: "DISCOVR — find catalogs", href: `${DOCS_URL}/product-documentation/products/discovr` },
-  { title: "ONIX — connect to everything", href: `${DOCS_URL}/product-documentation/products/onix` },
-];

@@ -8,10 +8,7 @@ const csp = [
   "frame-src 'none'",
   "frame-ancestors 'none'",
   "base-uri 'self'",
-  // 'self' for the archived ticket form's own API route, plus
-  // fabric.support.site for the Help Center search box, which submits
-  // there directly (opens in a new tab) rather than through a proxy.
-  "form-action 'self' https://fabric.support.site",
+  "form-action 'self'",
 ].join("; ");
 
 /** @type {import('next').NextConfig} */
