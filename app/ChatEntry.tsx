@@ -13,6 +13,7 @@ export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?:
   const [email, setEmail] = useState<string | null>(null);
   const [emailInput, setEmailInput] = useState("");
   const [emailError, setEmailError] = useState<string | null>(null);
+  const [widgetError, setWidgetError] = useState<string | null>(null);
 
   function handleEmailSubmit(event: FormEvent) {
     event.preventDefault();
@@ -22,6 +23,7 @@ export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?:
       return;
     }
     setEmailError(null);
+    setWidgetError(null);
     setEmail(trimmed);
   }
 
@@ -78,14 +80,31 @@ export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?:
             </button>
           </form>
         )}
+        {isExpanded && email && widgetError && (
+          <div className="chat-email-gate">
+            <p className="chat-email-error">{widgetError}</p>
+            <button
+              type="button"
+              className="chat-email-submit"
+              onClick={() => {
+                setWidgetError(null);
+                setEmail(null);
+              }}
+            >
+              Try again
+            </button>
+          </div>
+        )}
         <div
           id="plain-chat-embed"
           className={
-            isExpanded && email ? "chat-embed chat-embed-expanded" : "chat-embed chat-embed-collapsed"
+            isExpanded && email && !widgetError ? "chat-embed chat-embed-expanded" : "chat-embed chat-embed-collapsed"
           }
         />
       </div>
-      {isExpanded && email && <PlainChatWidget embedAt={CHAT_EMBED_SELECTOR} email={email} />}
+      {isExpanded && email && !widgetError && (
+        <PlainChatWidget embedAt={CHAT_EMBED_SELECTOR} email={email} onError={setWidgetError} />
+      )}
     </section>
   );
 }

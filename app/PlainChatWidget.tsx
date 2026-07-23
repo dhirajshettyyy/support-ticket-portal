@@ -24,7 +24,15 @@ declare global {
 // Nova (Ari) live chat, embedded via Plain's chat widget.
 const PLAIN_CHAT_APP_ID = "liveChatApp_01KWH2XSVE4CPF90QTG7ZDR8CA";
 
-export function PlainChatWidget({ embedAt, email }: { embedAt: string; email: string }) {
+export function PlainChatWidget({
+  embedAt,
+  email,
+  onError,
+}: {
+  embedAt: string;
+  email: string;
+  onError?: (message: string) => void;
+}) {
   const [emailHash, setEmailHash] = useState<string | null>(null);
 
   useEffect(() => {
@@ -34,17 +42,21 @@ export function PlainChatWidget({ embedAt, email }: { embedAt: string; email: st
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email }),
     })
-      .then((res) => (res.ok ? res.json() : Promise.reject(res)))
+      .then(async (res) => {
+        if (res.ok) return res.json();
+        const data = await res.json().catch(() => null);
+        throw new Error(data?.error || "Couldn't start chat. Please try again.");
+      })
       .then((data: { emailHash: string }) => {
         if (!cancelled) setEmailHash(data.emailHash);
       })
-      .catch(() => {
-        // Leave emailHash null - widget stays unmounted rather than opening unauthenticated.
+      .catch((err: Error) => {
+        if (!cancelled) onError?.(err.message);
       });
     return () => {
       cancelled = true;
     };
-  }, [email]);
+  }, [email, onError]);
 
   if (!emailHash) return null;
 
