@@ -58,7 +58,6 @@ export function PlainChatWidget({ embedAt, email }: { embedAt: string; email: st
           appId: PLAIN_CHAT_APP_ID,
           embedAt: container,
           entryPoint: { type: "chat" },
-          requireAuthentication: true,
           customerDetails: { email, emailHash },
         });
       }}
