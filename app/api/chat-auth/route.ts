@@ -1,7 +1,11 @@
 import { NextResponse } from "next/server";
 import * as crypto from "node:crypto";
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// The WHATWG HTML5 input[type=email] pattern - rejects HTML/script-shaped
+// strings that the previous [^\s@]+@[^\s@]+\.[^\s@]+ pattern let through.
+const EMAIL_RE =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+const EMAIL_MAX_LENGTH = 254; // RFC 5321 practical limit
 
 const COOKIE_NAME = "nfh_chat_rl";
 const BURST_WINDOW_MS = 10 * 60 * 1000;
@@ -74,7 +78,7 @@ export async function POST(request: Request) {
   }
 
   const email = typeof body.email === "string" ? body.email.trim().toLowerCase() : "";
-  if (!EMAIL_RE.test(email)) {
+  if (email.length > EMAIL_MAX_LENGTH || !EMAIL_RE.test(email)) {
     return NextResponse.json({ error: "Invalid email address" }, { status: 400 });
   }
 
