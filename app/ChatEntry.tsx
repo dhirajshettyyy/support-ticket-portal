@@ -62,7 +62,7 @@ export function ChatEntry({ placeholder = DEFAULT_PLACEHOLDER }: { placeholder?:
         )}
         {isExpanded && !email && (
           <form className="chat-email-gate" onSubmit={handleEmailSubmit}>
-            <p>Enter your email to start chatting with Ari.</p>
+            <p>Enter your email to start chatting with Node.</p>
             <input
               type="email"
               className="chat-email-input"
