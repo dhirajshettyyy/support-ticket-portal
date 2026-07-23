@@ -3,6 +3,7 @@
 
 import { ChatEntry } from "./ChatEntry";
 import { CommunityTiles } from "./CommunityTiles";
+import { NfhLogo } from "./NfhLogo";
 import { DiscordIcon, GitHubIcon, LinkedInIcon } from "./SocialIcons";
 import { ThemeToggle } from "./ThemeToggle";
 import { HELP_CENTER_URL, SITE_URL, SOCIAL_LINKS } from "./communityLinks";
@@ -11,15 +12,8 @@ export function SupportPage() {
   return (
     <>
       <header className="site-nav">
-        <a href={SITE_URL} className="nav-logo">
-          <span className="nav-logo-mark">NFH</span>
-          <span className="nav-logo-sub">
-            NETWORKS
-            <br />
-            FOR
-            <br />
-            HUMANITY
-          </span>
+        <a href={SITE_URL} className="nav-logo" aria-label="Networks for Humanity">
+          <NfhLogo className="nav-logo-svg" />
         </a>
 
         <div className="site-nav-right">
@@ -71,15 +65,8 @@ export function SupportPage() {
         </div>
 
         <div className="site-footer-bottom">
-          <div className="footer-logo">
-            <span className="footer-logo-mark">NFH</span>
-            <span className="footer-logo-sub">
-              NETWORKS
-              <br />
-              FOR
-              <br />
-              HUMANITY
-            </span>
+          <div className="footer-logo" aria-label="Networks for Humanity">
+            <NfhLogo className="footer-logo-svg" />
           </div>
           <p>&copy; 2026 Networks for Humanity. All rights reserved.</p>
         </div>

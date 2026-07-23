@@ -177,17 +177,9 @@ body {
   color: var(--header-text);
 }
 
-.nav-logo-mark {
-  font-size: 1.375rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.nav-logo-sub {
-  font-size: 0.5625rem;
-  font-weight: 600;
-  line-height: 1.2;
-  letter-spacing: 0.02em;
+.nav-logo-svg {
+  width: auto;
+  height: 32px;
   color: var(--header-text);
 }
 
@@ -914,18 +906,9 @@ textarea:focus {
   gap: 0.5rem;
 }
 
-.footer-logo-mark {
-  font-size: 1rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  color: #ffffff;
-}
-
-.footer-logo-sub {
-  font-size: 0.5625rem;
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: 0.03em;
+.footer-logo-svg {
+  width: auto;
+  height: 24px;
   color: #ffffff;
 }
 
