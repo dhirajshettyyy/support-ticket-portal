@@ -2,7 +2,7 @@
 "use client";
 
 import Script from "next/script";
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
@@ -43,7 +43,38 @@ export function PlainChatWidget({
   email: string;
   onError?: (message: string) => void;
 }) {
-  const [emailHash, setEmailHash] = useState<string | null>(null);
+  // Refs, not state: the script load and the /api/chat-auth call race each
+  // other now instead of running one after the other, and whichever finishes
+  // second needs a synchronous read of the other's result to decide whether
+  // it can call Plain.init() yet - state's async re-render wouldn't give
+  // that within the same tick.
+  const emailHashRef = useRef<string | null>(null);
+  const scriptLoadedRef = useRef(false);
+  const initializedRef = useRef(false);
+
+  function tryInit() {
+    if (initializedRef.current) return;
+    if (!scriptLoadedRef.current || !emailHashRef.current) return;
+    initializedRef.current = true;
+
+    const container = document.querySelector(embedAt);
+    window.Plain?.init({
+      appId: PLAIN_CHAT_APP_ID,
+      embedAt: container ?? undefined,
+      entryPoint: { type: "chat" },
+      customerDetails: { email, emailHash: emailHashRef.current },
+    });
+    setTimeout(() => {
+      // Plain renders into an open shadow root on the container, not as
+      // direct light-DOM children - childElementCount alone is always 0.
+      const hasContent = container?.shadowRoot
+        ? container.shadowRoot.childElementCount > 0
+        : (container?.childElementCount ?? 0) > 0;
+      if (!hasContent) {
+        onError?.(BLOCKED_MESSAGE);
+      }
+    }, LOAD_TIMEOUT_MS);
+  }
 
   useEffect(() => {
     let cancelled = false;
@@ -58,7 +89,9 @@ export function PlainChatWidget({
         throw new Error(data?.error || "Couldn't start chat. Please try again.");
       })
       .then((data: { emailHash: string }) => {
-        if (!cancelled) setEmailHash(data.emailHash);
+        if (cancelled) return;
+        emailHashRef.current = data.emailHash;
+        tryInit();
       })
       .catch((err: Error) => {
         if (!cancelled) onError?.(err.message);
@@ -66,32 +99,16 @@ export function PlainChatWidget({
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [email, onError]);
-
-  if (!emailHash) return null;
 
   return (
     <Script
       src="https://chat.cdn-plain.com/index.js"
       strategy="afterInteractive"
       onLoad={() => {
-        const container = document.querySelector(embedAt);
-        window.Plain?.init({
-          appId: PLAIN_CHAT_APP_ID,
-          embedAt: container ?? undefined,
-          entryPoint: { type: "chat" },
-          customerDetails: { email, emailHash },
-        });
-        setTimeout(() => {
-          // Plain renders into an open shadow root on the container, not as
-          // direct light-DOM children - childElementCount alone is always 0.
-          const hasContent = container?.shadowRoot
-            ? container.shadowRoot.childElementCount > 0
-            : (container?.childElementCount ?? 0) > 0;
-          if (!hasContent) {
-            onError?.(BLOCKED_MESSAGE);
-          }
-        }, LOAD_TIMEOUT_MS);
+        scriptLoadedRef.current = true;
+        tryInit();
       }}
       onError={() => onError?.(BLOCKED_MESSAGE)}
     />
