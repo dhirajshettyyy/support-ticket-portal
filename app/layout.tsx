@@ -10,7 +10,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata = {
-  title: "Fabric Community | Networks for Humanity",
+  title: "Community | Networks for Humanity",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
